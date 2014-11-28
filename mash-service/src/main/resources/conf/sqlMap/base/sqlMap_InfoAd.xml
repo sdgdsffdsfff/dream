@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="InfoAd">
+	<typeAlias alias="InfoAd" type="com.izpzp.mash.entity.InfoAd" />
+	<typeAlias alias="SearchInfoAdBean" type="com.izpzp.mash.intf.dto.SearchInfoAdBean" />
+
+	<resultMap id="InfoAdResult" class="InfoAd">
+			        <result property="adId" column="AD_ID" />
+	    	        <result property="categoryCode" column="CATEGORY_CODE" />
+	    	        <result property="imgUrl" column="IMG_URL" />
+	    	        <result property="targetUrl" column="TARGET_URL" />
+	    	        <result property="adDesc" column="AD_DESC" />
+	    	        <result property="adTitle" column="AD_TITLE" />
+	    	        <result property="adLocation" column="AD_LOCATION" />
+	    	        <result property="adShowFlag" column="AD_SHOW_FLAG" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="InfoAd-FIELDS">
+			        AD_ID,
+	    	        CATEGORY_CODE,
+	    	        IMG_URL,
+	    	        TARGET_URL,
+	    	        AD_DESC,
+	    	        AD_TITLE,
+	    	        AD_LOCATION,
+	    	        AD_SHOW_FLAG,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getInfoAdList" resultMap="InfoAdResult">
+        select
+        	<include refid="InfoAd-FIELDS" />
+        from
+        	T_INFO_AD
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="adId">
+            AD_ID = #adId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="imgUrl">
+            IMG_URL = #imgUrl# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="targetUrl">
+            TARGET_URL = #targetUrl# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="adDesc">
+            AD_DESC = #adDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="adTitle">
+            AD_TITLE = #adTitle# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="adLocation">
+            AD_LOCATION = #adLocation# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="adShowFlag">
+            AD_SHOW_FLAG = #adShowFlag# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getInfoAdObject" resultMap="InfoAdResult">
+        select
+          <include refid="InfoAd-FIELDS" />
+        from
+          T_INFO_AD
+    where 1=1 
+          AND AD_ID = #adId#
+        </select>
+
+    <select id="getInfoAdCounts" parameterClass="SearchInfoAdBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_INFO_AD
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="adId">
+            AD_ID = #adId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="imgUrl">
+            IMG_URL = #imgUrl# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="targetUrl">
+            TARGET_URL = #targetUrl# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="adDesc">
+            AD_DESC = #adDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="adTitle">
+            AD_TITLE = #adTitle# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="adLocation">
+            AD_LOCATION = #adLocation# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="adShowFlag">
+            AD_SHOW_FLAG = #adShowFlag# </isNotEmpty>
+            </select>
+
+	<insert id="insertInfoAd" parameterClass="InfoAd">  
+    	insert into T_INFO_AD  ( 
+    		 	             adId,
+	         	             categoryCode,
+	         	             imgUrl,
+	         	             targetUrl,
+	         	             adDesc,
+	         	             adTitle,
+	         	             adLocation,
+	         	             adShowFlag,
+	         	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #adId#,
+	    	        #categoryCode#,
+	    	        #imgUrl#,
+	    	        #targetUrl#,
+	    	        #adDesc#,
+	    	        #adTitle#,
+	    	        #adLocation#,
+	    	        #adShowFlag#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);      
+    <selectKey resultClass="long" keyProperty="id">
+		    select last_insert_id() as id
+		</selectKey>    
+ 	</insert> 
+
+	<update id="updateInfoAd" parameterClass="InfoAd">  
+     update T_INFO_AD 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="adId">          
+                    AD_ID=#adId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="categoryCode">          
+                    CATEGORY_CODE=#categoryCode#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="imgUrl">          
+                    IMG_URL=#imgUrl#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="targetUrl">          
+                    TARGET_URL=#targetUrl#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="adDesc">          
+                    AD_DESC=#adDesc#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="adTitle">          
+                    AD_TITLE=#adTitle#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="adLocation">          
+                    AD_LOCATION=#adLocation#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="adShowFlag">          
+                    AD_SHOW_FLAG=#adShowFlag#
+               </isNotNull>
+	                  <isNotNull prepend="," property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND AD_ID = #adId#
+     	</update> 
+	
+	<delete id="deleteInfoAd" parameterClass="long">
+		delete from T_INFO_AD where 1=1
+		    			  AND AD_ID = #adId#
+    		</delete>
+   
+</sqlMap>

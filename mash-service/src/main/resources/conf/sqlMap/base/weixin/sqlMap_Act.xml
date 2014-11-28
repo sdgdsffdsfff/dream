@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Act">
+	<typeAlias alias="Act" type="com.izpzp.mash.intf.weixin.dto.ActBean" />
+	<typeAlias alias="SearchActBean" type="com.izpzp.mash.intf.weixin.dto.SearchActBean" />
+
+	<resultMap id="ActResult" class="Act">
+			        <result property="actId" column="ACT_ID" />
+	    	        <result property="mpId" column="MP_ID" />
+	    	        <result property="wechatCode" column="WECHAT_CODE" />
+	    	        <result property="token" column="TOKEN" />
+	    	        <result property="actName" column="ACT_NAME" />
+	    	        <result property="actLogo" column="ACT_LOGO" />
+	    	        <result property="actBacImg" column="ACT_BAC_IMG" />
+	    	        <result property="mpQrImg" column="MP_QR_IMG" />
+	    	        <result property="topKeys" column="TOP_KEYS" />
+	    	        <result property="checkFlag" column="CHECK_FLAG" />
+	    	        <result property="actOnFlag" column="ACT_ON_FLAG" />
+	    	        <result property="actStartTime" column="ACT_START_TIME" />
+	    	        <result property="actEndTime" column="ACT_END_TIME" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="Act-FIELDS">
+			        ACT_ID,
+	    	        MP_ID,
+	    	        WECHAT_CODE,
+	    	        TOKEN,
+	    	        ACT_NAME,
+	    	        ACT_LOGO,
+	    	        ACT_BAC_IMG,
+	    	        MP_QR_IMG,
+	    	        TOP_KEYS,
+	    	        CHECK_FLAG,
+	    	        ACT_ON_FLAG,
+	    	        ACT_START_TIME,
+	    	        ACT_END_TIME,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getActList" resultMap="ActResult">
+        select
+        	<include refid="Act-FIELDS" />
+        from
+        	T_MP_ACT
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="actId">
+            ACT_ID = #actId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="mpId">
+            MP_ID = #mpId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="wechatCode">
+            WECHAT_CODE = #wechatCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="token">
+            TOKEN = #token# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actName">
+            ACT_NAME = #actName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actLogo">
+            ACT_LOGO = #actLogo# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actBacImg">
+            ACT_BAC_IMG = #actBacImg# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="mpQrImg">
+            MP_QR_IMG = #mpQrImg# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="topKeys">
+            TOP_KEYS = #topKeys# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="checkFlag">
+            CHECK_FLAG = #checkFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actOnFlag">
+            ACT_ON_FLAG = #actOnFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actStartTime">
+            ACT_START_TIME = #actStartTime# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actEndTime">
+            ACT_END_TIME = #actEndTime# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getActObject" resultMap="ActResult">
+        select
+          <include refid="Act-FIELDS" />
+        from
+          T_MP_ACT
+    where 1=1 
+          AND ACT_ID = #actId#
+        </select>
+
+    <select id="getActCounts"  parameterClass="SearchActBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_MP_ACT
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="actId">
+            ACT_ID = #actId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="mpId">
+            MP_ID = #mpId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="wechatCode">
+            WECHAT_CODE = #wechatCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="token">
+            TOKEN = #token# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actName">
+            ACT_NAME = #actName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actLogo">
+            ACT_LOGO = #actLogo# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actBacImg">
+            ACT_BAC_IMG = #actBacImg# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="mpQrImg">
+            MP_QR_IMG = #mpQrImg# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="topKeys">
+            TOP_KEYS = #topKeys# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="checkFlag">
+            CHECK_FLAG = #checkFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actOnFlag">
+            ACT_ON_FLAG = #actOnFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actStartTime">
+            ACT_START_TIME = #actStartTime# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actEndTime">
+            ACT_END_TIME = #actEndTime# </isNotEmpty>
+            </select>
+
+	<insert id="insertAct" parameterClass="Act">  
+    	insert into T_MP_ACT  ( 
+			        ACT_ID,
+	    	        MP_ID,
+	    	        WECHAT_CODE,
+	    	        TOKEN,
+	    	        ACT_NAME,
+	    	        ACT_LOGO,
+	    	        ACT_BAC_IMG,
+	    	        MP_QR_IMG,
+	    	        TOP_KEYS,
+	    	        CHECK_FLAG,
+	    	        ACT_ON_FLAG,
+	    	        ACT_START_TIME,
+	    	        ACT_END_TIME,
+	    	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #actId#,
+	    	        #mpId#,
+	    	        #wechatCode#,
+	    	        #token#,
+	    	        #actName#,
+	    	        #actLogo#,
+	    	        #actBacImg#,
+	    	        #mpQrImg#,
+	    	        #topKeys#,
+	    	        #checkFlag#,
+	    	        #actOnFlag#,
+	    	        #actStartTime#,
+	    	        #actEndTime#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);
+ 	</insert> 
+
+	<update id="updateAct" parameterClass="Act">  
+     update T_MP_ACT 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="actId">          
+                    ACT_ID=#actId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="mpId">          
+                    MP_ID=#mpId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="wechatCode">          
+                    WECHAT_CODE=#wechatCode#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="token">          
+                    TOKEN=#token#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="actName">          
+                    ACT_NAME=#actName#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="actLogo">          
+                    ACT_LOGO=#actLogo#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="actBacImg">          
+                    ACT_BAC_IMG=#actBacImg#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="mpQrImg">          
+                    MP_QR_IMG=#mpQrImg#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="topKeys">          
+                    TOP_KEYS=#topKeys#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="checkFlag">          
+                    CHECK_FLAG=#checkFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="actOnFlag">          
+                    ACT_ON_FLAG=#actOnFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="actStartTime">          
+                    ACT_START_TIME=#actStartTime#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="actEndTime">          
+                    ACT_END_TIME=#actEndTime#
+               </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND ACT_ID = #actId#
+		   <isNotNull prepend=" AND " property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+     	</update> 
+	
+	<delete id="deleteAct" parameterClass="java.lang.Integer">
+		delete from T_MP_ACT where 1=1
+		    			  AND ACT_ID = #actId#
+    		</delete>
+   
+</sqlMap>

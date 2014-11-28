@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="InfoBase">
+	<typeAlias alias="InfoBase" type="com.izpzp.mash.entity.InfoBase" />
+	<typeAlias alias="SearchInfoBaseBean" type="com.izpzp.mash.intf.dto.SearchInfoBaseBean" />
+
+	<resultMap id="InfoBaseResult" class="InfoBase">
+			        <result property="infoId" column="INFO_ID" />
+	    	        <result property="infoTitle" column="INFO_TITLE" />
+	    	        <result property="categoryCode" column="CATEGORY_CODE" />
+	    	        <result property="typeId" column="TYPE_ID" />
+	    	        <result property="infoValue" column="INFO_VALUE" />
+	    	        <result property="infoDesc" column="INFO_DESC" />
+	    	        <result property="infoCheckFlag" column="INFO_CHECK_FLAG" />
+	    	        <result property="infoDelFlag" column="INFO_DEL_FLAG" />
+	    	        <result property="infoSortIndex" column="INFO_SORT_INDEX" />
+	    	        <result property="infoContact" column="INFO_CONTACT" />
+	    	        <result property="infoTel" column="INFO_TEL" />
+	    	        <result property="infoQq" column="INFO_QQ" />
+	    	        <result property="infoMail" column="INFO_MAIL" />
+	    	        <result property="userId" column="USER_ID" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="InfoBase-FIELDS">
+			        INFO_ID,
+	    	        INFO_TITLE,
+	    	        CATEGORY_CODE,
+	    	        TYPE_ID,
+	    	        INFO_VALUE,
+	    	        INFO_DESC,
+	    	        INFO_CHECK_FLAG,
+	    	        INFO_DEL_FLAG,
+	    	        INFO_SORT_INDEX,
+	    	        INFO_CONTACT,
+	    	        INFO_TEL,
+	    	        INFO_QQ,
+	    	        INFO_MAIL,
+	    	        USER_ID,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getInfoBaseList" resultMap="InfoBaseResult">
+        select
+        	<include refid="InfoBase-FIELDS" />
+        from
+        	T_INFO_BASE
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="infoId">
+            INFO_ID = #infoId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoTitle">
+            INFO_TITLE = #infoTitle# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeId">
+            TYPE_ID = #typeId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoValue">
+            INFO_VALUE = #infoValue# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoDesc">
+            INFO_DESC = #infoDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoCheckFlag">
+            INFO_CHECK_FLAG = #infoCheckFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoDelFlag">
+            INFO_DEL_FLAG = #infoDelFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoSortIndex">
+            INFO_SORT_INDEX = #infoSortIndex# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoContact">
+            INFO_CONTACT = #infoContact# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoTel">
+            INFO_TEL = #infoTel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoQq">
+            INFO_QQ = #infoQq# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoMail">
+            INFO_MAIL = #infoMail# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userId">
+            USER_ID = #userId# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getInfoBaseObject" resultMap="InfoBaseResult">
+        select
+          <include refid="InfoBase-FIELDS" />
+        from
+          T_INFO_BASE
+    where 1=1 
+          AND INFO_ID = #infoId#
+        </select>
+
+    <select id="getInfoBaseCounts" parameterClass="SearchInfoBaseBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_INFO_BASE
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="infoId">
+            INFO_ID = #infoId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoTitle">
+            INFO_TITLE = #infoTitle# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeId">
+            TYPE_ID = #typeId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoValue">
+            INFO_VALUE = #infoValue# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoDesc">
+            INFO_DESC = #infoDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoCheckFlag">
+            INFO_CHECK_FLAG = #infoCheckFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoDelFlag">
+            INFO_DEL_FLAG = #infoDelFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoSortIndex">
+            INFO_SORT_INDEX = #infoSortIndex# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoContact">
+            INFO_CONTACT = #infoContact# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoTel">
+            INFO_TEL = #infoTel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoQq">
+            INFO_QQ = #infoQq# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoMail">
+            INFO_MAIL = #infoMail# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userId">
+            USER_ID = #userId# </isNotEmpty>
+            </select>
+
+	<insert id="insertInfoBase" parameterClass="InfoBase">  
+    	insert into T_INFO_BASE  ( 
+    		 	             infoId,
+	         	             infoTitle,
+	         	             categoryCode,
+	         	             typeId,
+	         	             infoValue,
+	         	             infoDesc,
+	         	             infoCheckFlag,
+	         	             infoDelFlag,
+	         	             infoSortIndex,
+	         	             infoContact,
+	         	             infoTel,
+	         	             infoQq,
+	         	             infoMail,
+	         	             userId,
+	         	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #infoId#,
+	    	        #infoTitle#,
+	    	        #categoryCode#,
+	    	        #typeId#,
+	    	        #infoValue#,
+	    	        #infoDesc#,
+	    	        #infoCheckFlag#,
+	    	        #infoDelFlag#,
+	    	        #infoSortIndex#,
+	    	        #infoContact#,
+	    	        #infoTel#,
+	    	        #infoQq#,
+	    	        #infoMail#,
+	    	        #userId#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);      
+    <selectKey resultClass="long" keyProperty="id">
+		    select last_insert_id() as id
+		</selectKey>    
+ 	</insert> 
+
+	<update id="updateInfoBase" parameterClass="InfoBase">  
+     update T_INFO_BASE 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="infoId">          
+                    INFO_ID=#infoId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoTitle">          
+                    INFO_TITLE=#infoTitle#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="categoryCode">          
+                    CATEGORY_CODE=#categoryCode#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="typeId">          
+                    TYPE_ID=#typeId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoValue">          
+                    INFO_VALUE=#infoValue#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoDesc">          
+                    INFO_DESC=#infoDesc#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoCheckFlag">          
+                    INFO_CHECK_FLAG=#infoCheckFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoDelFlag">          
+                    INFO_DEL_FLAG=#infoDelFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoSortIndex">          
+                    INFO_SORT_INDEX=#infoSortIndex#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoContact">          
+                    INFO_CONTACT=#infoContact#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoTel">          
+                    INFO_TEL=#infoTel#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoQq">          
+                    INFO_QQ=#infoQq#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="infoMail">          
+                    INFO_MAIL=#infoMail#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userId">          
+                    USER_ID=#userId#
+               </isNotNull>
+	                  <isNotNull prepend="," property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND INFO_ID = #infoId#
+     	</update> 
+	
+	<delete id="deleteInfoBase" parameterClass="long">
+		delete from T_INFO_BASE where 1=1
+		    			  AND INFO_ID = #infoId#
+    		</delete>
+   
+</sqlMap>

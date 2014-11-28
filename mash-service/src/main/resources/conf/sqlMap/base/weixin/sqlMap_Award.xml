@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Award">
+	<typeAlias alias="Award" type="com.izpzp.mash.intf.weixin.dto.AwardBean" />
+	<typeAlias alias="SearchAwardBean" type="com.izpzp.mash.intf.weixin.dto.SearchAwardBean" />
+
+	<resultMap id="AwardResult" class="Award">
+			        <result property="awardId" column="AWARD_ID" />
+	    	        <result property="actId" column="ACT_ID" />
+	    	        <result property="awardName" column="AWARD_NAME" />
+	    	        <result property="awardLevel" column="AWARD_LEVEL" />
+	    	        <result property="awardCont" column="AWARD_CONT" />
+	    	        <result property="awardImg" column="AWARD_IMG" />
+	    	        <result property="awardNum" column="AWARD_NUM" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="Award-FIELDS">
+			        AWARD_ID,
+	    	        ACT_ID,
+	    	        AWARD_NAME,
+	    	        AWARD_LEVEL,
+	    	        AWARD_CONT,
+	    	        AWARD_IMG,
+	    	        AWARD_NUM,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getAwardList" resultMap="AwardResult">
+        select
+        	<include refid="Award-FIELDS" />
+        from
+        	T_MP_AWARD
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="awardId">
+            AWARD_ID = #awardId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actId">
+            ACT_ID = #actId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardName">
+            AWARD_NAME = #awardName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardLevel">
+            AWARD_LEVEL = #awardLevel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardCont">
+            AWARD_CONT = #awardCont# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardImg">
+            AWARD_IMG = #awardImg# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardNum">
+            AWARD_NUM = #awardNum# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getAwardObject" resultMap="AwardResult">
+        select
+          <include refid="Award-FIELDS" />
+        from
+          T_MP_AWARD
+    where 1=1 
+          AND AWARD_ID = #awardId#
+        </select>
+
+    <select id="getAwardCounts" parameterClass="SearchAwardBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_MP_AWARD
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="awardId">
+            AWARD_ID = #awardId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actId">
+            ACT_ID = #actId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardName">
+            AWARD_NAME = #awardName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardLevel">
+            AWARD_LEVEL = #awardLevel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardCont">
+            AWARD_CONT = #awardCont# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardImg">
+            AWARD_IMG = #awardImg# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardNum">
+            AWARD_NUM = #awardNum# </isNotEmpty>
+            </select>
+
+	<insert id="insertAward" parameterClass="Award">  
+    	insert into T_MP_AWARD  ( 
+			        AWARD_ID,
+	    	        ACT_ID,
+	    	        AWARD_NAME,
+	    	        AWARD_LEVEL,
+	    	        AWARD_CONT,
+	    	        AWARD_IMG,
+	    	        AWARD_NUM,
+	    	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #awardId#,
+	    	        #actId#,
+	    	        #awardName#,
+	    	        #awardLevel#,
+	    	        #awardCont#,
+	    	        #awardImg#,
+	    	        #awardNum#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);      
+    <selectKey resultClass="long" keyProperty="id">
+		    select last_insert_id() as id
+		</selectKey>    
+ 	</insert> 
+
+	<update id="updateAward" parameterClass="Award">  
+     update T_MP_AWARD 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="awardId">          
+                    AWARD_ID=#awardId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="actId">          
+                    ACT_ID=#actId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="awardName">          
+                    AWARD_NAME=#awardName#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="awardLevel">          
+                    AWARD_LEVEL=#awardLevel#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="awardCont">          
+                    AWARD_CONT=#awardCont#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="awardImg">          
+                    AWARD_IMG=#awardImg#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="awardNum">          
+                    AWARD_NUM=#awardNum#
+               </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND AWARD_ID = #awardId#
+           <isNotNull prepend=" AND " property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+     	</update> 
+	
+	<delete id="deleteAward" parameterClass="java.lang.Integer">
+		delete from T_MP_AWARD where 1=1
+		    			  AND AWARD_ID = #awardId#
+    		</delete>
+   
+</sqlMap>

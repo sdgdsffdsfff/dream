@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="InfoBaseExtBean">
+	<typeAlias alias="InfoBaseExtBean" type="com.izpzp.mash.intf.dto.InfoBaseExtBean" />
+	<typeAlias alias="SearchInfoBaseBean" type="com.izpzp.mash.intf.dto.SearchInfoBaseBean" />
+	<typeAlias alias="InfoBaseBean" type="com.izpzp.mash.intf.dto.InfoBaseBean" />
+
+	<resultMap id="InfoBaseExtBeanResult" class="InfoBaseExtBean">
+			        <result property="infoId" column="INFO_ID" />
+	    	        <result property="infoTitle" column="INFO_TITLE" />
+	    	        <result property="categoryCode" column="CATEGORY_CODE" />
+	    	        <result property="typeId" column="TYPE_ID" />
+	    	        <result property="infoValue" column="INFO_VALUE" />
+	    	        <result property="infoDesc" column="INFO_DESC" />
+	    	        <result property="infoCheckFlag" column="INFO_CHECK_FLAG" />
+	    	        <result property="infoDelFlag" column="INFO_DEL_FLAG" />
+	    	        <result property="infoSortIndex" column="INFO_SORT_INDEX" />
+	    	        <result property="infoContact" column="INFO_CONTACT" />
+	    	        <result property="infoTel" column="INFO_TEL" />
+	    	        <result property="infoQq" column="INFO_QQ" />
+	    	        <result property="infoMail" column="INFO_MAIL" />
+	    	        <result property="userId" column="USER_ID" />
+					<result property="typeName" column="TYPE_NAME" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="InfoBaseExtBean-FIELDS">
+			        INFO_ID,
+	    	        INFO_TITLE,
+	    	        info.CATEGORY_CODE,
+	    	        info.TYPE_ID,
+	    	        INFO_VALUE,
+	    	        INFO_DESC,
+	    	        INFO_CHECK_FLAG,
+	    	        INFO_DEL_FLAG,
+	    	        INFO_SORT_INDEX,
+	    	        INFO_CONTACT,
+	    	        INFO_TEL,
+	    	        INFO_QQ,
+	    	        INFO_MAIL,
+	    	        USER_ID,
+					TYPE_NAME,
+	    	    info.CREATOR,info.UPDATER,info.UPDATE_DTTM
+	</sql>
+
+	<select id="getInfoBaseExtBeanList" resultMap="InfoBaseExtBeanResult">
+        select
+        	<include refid="InfoBaseExtBean-FIELDS" />
+        from
+            T_INFO_BASE info LEFT JOIN T_INFO_TYPE type 
+			 ON (info.TYPE_ID = type.TYPE_ID AND info.CATEGORY_CODE = type.CATEGORY_CODE)  
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="infoId">
+            INFO_ID = #infoId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoTitle">
+            INFO_TITLE = #infoTitle# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            info.CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeId">
+            info.TYPE_ID = #typeId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoValue">
+            INFO_VALUE = #infoValue# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoDesc">
+            INFO_DESC = #infoDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoCheckFlag">
+            INFO_CHECK_FLAG = #infoCheckFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoDelFlag">
+            INFO_DEL_FLAG = #infoDelFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoSortIndex">
+            INFO_SORT_INDEX = #infoSortIndex# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoContact">
+            INFO_CONTACT = #infoContact# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoTel">
+            INFO_TEL = #infoTel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoQq">
+            INFO_QQ = #infoQq# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoMail">
+            INFO_MAIL = #infoMail# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userId">
+            info.USER_ID = #userId# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getInfoBaseExtBeanCounts" parameterClass="SearchInfoBaseBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_INFO_BASE
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="infoId">
+            INFO_ID = #infoId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoTitle">
+            INFO_TITLE = #infoTitle# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeId">
+            TYPE_ID = #typeId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoValue">
+            INFO_VALUE = #infoValue# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoDesc">
+            INFO_DESC = #infoDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoCheckFlag">
+            INFO_CHECK_FLAG = #infoCheckFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoDelFlag">
+            INFO_DEL_FLAG = #infoDelFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoSortIndex">
+            INFO_SORT_INDEX = #infoSortIndex# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoContact">
+            INFO_CONTACT = #infoContact# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoTel">
+            INFO_TEL = #infoTel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoQq">
+            INFO_QQ = #infoQq# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="infoMail">
+            INFO_MAIL = #infoMail# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userId">
+            USER_ID = #userId# </isNotEmpty>
+  </select>
+   
+   	<delete id="deleteInfoBaseExt" parameterClass="InfoBaseBean">
+		delete from T_INFO_BASE where 1=1 
+		    			  AND INFO_ID = #infoId# 
+						  AND USER_ID = #userId# 
+    </delete>
+   
+</sqlMap>

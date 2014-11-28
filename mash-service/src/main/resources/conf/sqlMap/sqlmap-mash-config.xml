@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+    <sqlMap resource="conf/sqlMap/base/sqlmap-base.xml" />
+	<sqlMap resource="conf/sqlMap/base/sqlMap_MashInfo.xml" />
+	<sqlMap resource="conf/sqlMap/base/sqlMap_InfoBaseExt.xml" />
+	<sqlMap resource="conf/sqlMap/base/sqlMap_InfoAd.xml" />
+	<sqlMap resource="conf/sqlMap/base/sqlMap_InfoBase.xml" />
+	<sqlMap resource="conf/sqlMap/base/sqlMap_InfoCategory.xml" />
+	<sqlMap resource="conf/sqlMap/base/sqlMap_InfoType.xml" />
+	<sqlMap resource="conf/sqlMap/base/sqlMap_LinkInfo.xml" />
+	<sqlMap resource="conf/sqlMap/base/sqlMap_UserInfo.xml" />
+	<sqlMap resource="conf/sqlMap/base/weixin/sqlMap_AccountInfo.xml" />
+	<sqlMap resource="conf/sqlMap/base/weixin/sqlMap_Act.xml" />
+	<sqlMap resource="conf/sqlMap/base/weixin/sqlMap_Award.xml" />
+	<sqlMap resource="conf/sqlMap/base/weixin/sqlMap_Msg.xml" />
+	<sqlMap resource="conf/sqlMap/base/weixin/sqlMap_Winning.xml" />
+	<sqlMap resource="conf/sqlMap/base/weixin/sqlMap_User.xml" />
+</sqlMapConfig>

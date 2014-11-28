@@ -1,0 +1,33 @@
+<div class="nav-head">
+    <div class="nav-head-info">
+        <i class="icon iconfont avatar">&#xe608;</i>
+        <span title="{{currentUser}}">admin</span>
+		<div class="icon-container">
+	        <a href="#/console" title="首页">
+	            <i class="icon iconfont">&#xe61b;</i>
+	        </a>
+	        <a href="/cloud-web-in/logon/logout.htm" title="退出">
+	            <i class="icon iconfont">&#xe629;</i>
+	        </a>
+	    </div>
+    </div>
+</div>
+<hr/>
+<div class="accordion" ng-init="init()">
+    <div class="accordion-item" ng-repeat="group in menuGroups">
+        <div ng-class="groupClass(group)" ng-click="selectGroup(group)">
+            <i class="icon iconfont" ng-show="group==selectedGroup">&#xe601;</i>
+	        <i class="icon iconfont" ng-show="group!=selectedGroup">&#xe600;</i>
+	        {{group.name}}
+        </div>
+        <div class="cloud-menu" ng-show="group==selectedGroup">
+            <ul>
+                <li ng-repeat="menu in group.menus" ng-class="menuClass(menu)">
+                    <a ng-click="selectMenu(menu)"
+                       href="{{menu.url}}"><i class="icon iconfont"
+                                              ng-bind-html="trust(menu.icon)"></i>{{menu.title}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

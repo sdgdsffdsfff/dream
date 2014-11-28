@@ -1,0 +1,58 @@
+<div class="col-md-12 module-header">
+    <div class="header">
+        <h2 class="title">上墙信息维护</h2>
+    </div>
+</div>
+<div class="col-md-12">
+	<form class="navbar-form navbar-left col-md-12" role="form">
+		<div class="form-group">
+			活动id
+			<input type="text" class="form-control" ng-model="activityId" placeholder="请输入活动id..." />
+			上墙标识
+			<select ng-model="typeSelected" ng-init="typeSelected=wallStatus[0].id"
+			        ng-options="value.id as value.label for value in wallStatus"
+			        ng-change="switchwallStatus()"
+			        class="form-control">
+			</select>
+		</div>
+		<br/>
+		<div class="form-group">
+			<ul class="nav nav-tabs text-center" role="tablist">
+				<li role="presentation" ng-class="indexClass('hasPassed')">
+					<a href="javascript:void(0)" ng-click="changeIndex('hasPassed')">已审核</a>
+				</li>
+				<li role="presentation" ng-class="indexClass('toBePassed')">
+					<a href="javascript:void(0)" ng-click="changeIndex('hasPassed')">未审核</a>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+<div class="col-md-12">
+	<table class="table table-bordered table-hover table-striped">
+		<thead>
+			<tr>
+				<th>消息Id</th>
+				<th>活动Id</th>
+				<th>openId</th>
+				<th>消息内容</th>
+				<th>审核设置</th>
+				<th>上墙设置</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-center">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><a href="javascript:;" >删除</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<sn-pager style="float:right;" ng-show="showPageIndex()" itemsPerPage="{{pageSize}}" totalItems="{{totalCount}}"
+		          listSize="10"></sn-pager>
+</div>

@@ -1,0 +1,57 @@
+<div class="modal fade in"  ng-controller="ChargeLotteryCtrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="close()">
+                    <span aria-hidden="true">&times</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">兑奖</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="adminForm">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >奖品名称</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" ng-model="token">
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-md-3 control-label" >奖品内容</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" ng-model="weixinAccount">
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-md-3 control-label" >兑奖码</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" ng-model="accessToken">
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-md-3 control-label" >领奖人姓名 </label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" ng-model="appId">
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-md-3 control-label" >领奖人手机号码</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" ng-model="appSecret">
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-md-3 control-label">领奖时间</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" ng-model="time">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" ng-disabled="adminForm.$pristine" ng-click="ok()">兑奖</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

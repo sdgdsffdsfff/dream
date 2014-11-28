@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="InfoType">
+	<typeAlias alias="InfoType" type="com.izpzp.mash.entity.InfoType" />
+	<typeAlias alias="SearchInfoTypeBean" type="com.izpzp.mash.intf.dto.SearchInfoTypeBean" />
+	
+	<resultMap id="InfoTypeResult" class="InfoType">
+			        <result property="typeId" column="TYPE_ID" />
+	    	        <result property="categoryCode" column="CATEGORY_CODE" />
+	    	        <result property="typeName" column="TYPE_NAME" />
+	    	        <result property="typeInfoTitleLable" column="TYPE_INFO_TITLE_LABLE" />
+	    	        <result property="typeInfoValueLable" column="TYPE_INFO_VALUE_LABLE" />
+	    	        <result property="typeInfoDescLable" column="TYPE_INFO_DESC_LABLE" />
+	    	        <result property="typeInfoRemark" column="TYPE_INFO_REMARK" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="InfoType-FIELDS">
+			        TYPE_ID,
+	    	        CATEGORY_CODE,
+	    	        TYPE_NAME,
+	    	        TYPE_INFO_TITLE_LABLE,
+	    	        TYPE_INFO_VALUE_LABLE,
+	    	        TYPE_INFO_DESC_LABLE,
+	    	        TYPE_INFO_REMARK,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getInfoTypeList" resultMap="InfoTypeResult">
+        select
+        	<include refid="InfoType-FIELDS" />
+        from
+        	T_INFO_TYPE
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="typeId">
+            TYPE_ID = #typeId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeName">
+            TYPE_NAME = #typeName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeInfoTitleLable">
+            TYPE_INFO_TITLE_LABLE = #typeInfoTitleLable# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeInfoValueLable">
+            TYPE_INFO_VALUE_LABLE = #typeInfoValueLable# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeInfoDescLable">
+            TYPE_INFO_DESC_LABLE = #typeInfoDescLable# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeInfoRemark">
+            TYPE_INFO_REMARK = #typeInfoRemark# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getInfoTypeObject" resultMap="InfoTypeResult">
+        select
+          <include refid="InfoType-FIELDS" />
+        from
+          T_INFO_TYPE
+    where 1=1 
+          AND TYPE_ID = #typeId#
+        </select>
+
+    <select id="getInfoTypeCounts" parameterClass="SearchInfoTypeBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_INFO_TYPE
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="typeId">
+            TYPE_ID = #typeId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeName">
+            TYPE_NAME = #typeName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeInfoTitleLable">
+            TYPE_INFO_TITLE_LABLE = #typeInfoTitleLable# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeInfoValueLable">
+            TYPE_INFO_VALUE_LABLE = #typeInfoValueLable# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeInfoDescLable">
+            TYPE_INFO_DESC_LABLE = #typeInfoDescLable# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="typeInfoRemark">
+            TYPE_INFO_REMARK = #typeInfoRemark# </isNotEmpty>
+            </select>
+
+	<insert id="insertInfoType" parameterClass="InfoType">  
+    	insert into T_INFO_TYPE  ( 
+    		 	             typeId,
+	         	             categoryCode,
+	         	             typeName,
+	         	             typeInfoTitleLable,
+	         	             typeInfoValueLable,
+	         	             typeInfoDescLable,
+	         	             typeInfoRemark,
+	         	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #typeId#,
+	    	        #categoryCode#,
+	    	        #typeName#,
+	    	        #typeInfoTitleLable#,
+	    	        #typeInfoValueLable#,
+	    	        #typeInfoDescLable#,
+	    	        #typeInfoRemark#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);      
+    <selectKey resultClass="long" keyProperty="id">
+		    select last_insert_id() as id
+		</selectKey>    
+ 	</insert> 
+
+	<update id="updateInfoType" parameterClass="InfoType">  
+     update T_INFO_TYPE 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="typeId">          
+                    TYPE_ID=#typeId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="categoryCode">          
+                    CATEGORY_CODE=#categoryCode#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="typeName">          
+                    TYPE_NAME=#typeName#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="typeInfoTitleLable">          
+                    TYPE_INFO_TITLE_LABLE=#typeInfoTitleLable#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="typeInfoValueLable">          
+                    TYPE_INFO_VALUE_LABLE=#typeInfoValueLable#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="typeInfoDescLable">          
+                    TYPE_INFO_DESC_LABLE=#typeInfoDescLable#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="typeInfoRemark">          
+                    TYPE_INFO_REMARK=#typeInfoRemark#
+               </isNotNull>
+	                  <isNotNull prepend="," property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND TYPE_ID = #typeId#
+     	</update> 
+	
+	<delete id="deleteInfoType" parameterClass="long">
+		delete from T_INFO_TYPE where 1=1
+		    			  AND TYPE_ID = #typeId#
+    		</delete>
+   
+</sqlMap>

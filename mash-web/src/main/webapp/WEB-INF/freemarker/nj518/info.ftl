@@ -1,0 +1,45 @@
+<#if info?? >
+<table class="uiTable">
+   <tbody>
+      <tr>
+          <td><p>信息类型:</p></td>
+          <td><p>${info.typeName}</p></td>
+      </tr>
+      <tr>
+          <td><p>审核标志：</p></td>
+          <td><p>${info.infoCheckFlag}</p></td>
+      </tr>
+      <tr>
+          <td><p>标题:</p></td>
+          <td><p>${info.infoTitle}</p></td>
+      </tr>
+      <tr>
+          <td><p>工作岗位:</p></td>
+          <td><p>${info.infoValue}</p></td>
+      </tr>
+      <tr>
+          <td><p>描述:</p></td>
+          <td><p>${info.infoDesc}</p></td>
+      </tr>
+      <tr>
+          <td><p>联系人:</p></td>
+          <td><p>${info.infoContact}</p></td>
+      </tr>
+      <tr>
+          <td><p>联系方式：</p></td>
+          <td><p>${info.infoTel}</p></td>
+      </tr>
+      <tr>
+          <td><p>邮箱：</p></td>
+          <td><p>${info.infoMail}</p></td>
+      </tr>
+      <tr>
+          <td><p>QQ：</p></td>
+          <td><p>${info.infoQq}</p></td>
+      </tr>
+   </tbody>
+</table>
+联系我时，请一定要说明是从nj518社区信息中查看到的!
+<#else>
+暂无该详细数据
+</#if>

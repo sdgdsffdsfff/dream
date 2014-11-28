@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="LinkInfo">
+	<typeAlias alias="LinkInfo" type="com.izpzp.mash.entity.LinkInfo" />
+	<typeAlias alias="SearchLinkInfoBean" type="com.izpzp.mash.intf.dto.SearchLinkInfoBean" />
+
+	<resultMap id="LinkInfoResult" class="LinkInfo">
+			        <result property="linkId" column="LINK_ID" />
+	    	        <result property="linkTitle" column="LINK_TITLE" />
+	    	        <result property="linkDesc" column="LINK_DESC" />
+	    	        <result property="linkImg" column="LINK_IMG" />
+	    	        <result property="linkUrl" column="LINK_URL" />
+	    	        <result property="linkShowFlag" column="LINK_SHOW_FLAG" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="LinkInfo-FIELDS">
+			        LINK_ID,
+	    	        LINK_TITLE,
+	    	        LINK_DESC,
+	    	        LINK_IMG,
+	    	        LINK_URL,
+	    	        LINK_SHOW_FLAG,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getLinkInfoList" resultMap="LinkInfoResult">
+        select
+        	<include refid="LinkInfo-FIELDS" />
+        from
+        	T_LINK_INFO
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="linkId">
+            LINK_ID = #linkId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkTitle">
+            LINK_TITLE = #linkTitle# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkDesc">
+            LINK_DESC = #linkDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkImg">
+            LINK_IMG = #linkImg# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkUrl">
+            LINK_URL = #linkUrl# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkShowFlag">
+            LINK_SHOW_FLAG = #linkShowFlag# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getLinkInfoObject" resultMap="LinkInfoResult">
+        select
+          <include refid="LinkInfo-FIELDS" />
+        from
+          T_LINK_INFO
+    where 1=1 
+          AND LINK_ID = #linkId#
+        </select>
+
+    <select id="getLinkInfoCounts" parameterClass="SearchLinkInfoBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_LINK_INFO
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="linkId">
+            LINK_ID = #linkId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkTitle">
+            LINK_TITLE = #linkTitle# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkDesc">
+            LINK_DESC = #linkDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkImg">
+            LINK_IMG = #linkImg# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkUrl">
+            LINK_URL = #linkUrl# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="linkShowFlag">
+            LINK_SHOW_FLAG = #linkShowFlag# </isNotEmpty>
+            </select>
+
+	<insert id="insertLinkInfo" parameterClass="LinkInfo">  
+    	insert into T_LINK_INFO  ( 
+    		 	             linkId,
+	         	             linkTitle,
+	         	             linkDesc,
+	         	             linkImg,
+	         	             linkUrl,
+	         	             linkShowFlag,
+	         	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #linkId#,
+	    	        #linkTitle#,
+	    	        #linkDesc#,
+	    	        #linkImg#,
+	    	        #linkUrl#,
+	    	        #linkShowFlag#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);      
+    <selectKey resultClass="long" keyProperty="id">
+		    select last_insert_id() as id
+		</selectKey>    
+ 	</insert> 
+
+	<update id="updateLinkInfo" parameterClass="LinkInfo">  
+     update T_LINK_INFO 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="linkId">          
+                    LINK_ID=#linkId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="linkTitle">          
+                    LINK_TITLE=#linkTitle#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="linkDesc">          
+                    LINK_DESC=#linkDesc#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="linkImg">          
+                    LINK_IMG=#linkImg#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="linkUrl">          
+                    LINK_URL=#linkUrl#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="linkShowFlag">          
+                    LINK_SHOW_FLAG=#linkShowFlag#
+               </isNotNull>
+	                  <isNotNull prepend="," property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND LINK_ID = #linkId#
+     	</update> 
+	
+	<delete id="deleteLinkInfo" parameterClass="long">
+		delete from T_LINK_INFO where 1=1
+		    			  AND LINK_ID = #linkId#
+    		</delete>
+   
+</sqlMap>

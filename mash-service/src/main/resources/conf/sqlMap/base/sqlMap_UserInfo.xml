@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="UserInfo">
+	<typeAlias alias="UserInfo" type="com.izpzp.mash.entity.UserInfo" />
+
+	<resultMap id="UserInfoResult" class="UserInfo">
+			        <result property="userId" column="USER_ID" />
+	    	        <result property="userCode" column="USER_CODE" />
+	    	        <result property="userWeixinName" column="USER_WEIXIN_NAME" />
+	    	        <result property="userName" column="USER_NAME" />
+	    	        <result property="userPasscard" column="USER_PASSCARD" />
+	    	        <result property="userVipFlag" column="USER_VIP_FLAG" />
+	    	        <result property="userGagFlag" column="USER_GAG_FLAG" />
+	    	        <result property="userDelFlag" column="USER_DEL_FLAG" />
+	    	        <result property="userTel" column="USER_TEL" />
+	    	        <result property="userQq" column="USER_QQ" />
+	    	        <result property="userMail" column="USER_MAIL" />
+	    	        <result property="userDesc" column="USER_DESC" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="UserInfo-FIELDS">
+			        USER_ID,
+	    	        USER_CODE,
+	    	        USER_WEIXIN_NAME,
+	    	        USER_NAME,
+	    	        USER_PASSCARD,
+	    	        USER_VIP_FLAG,
+	    	        USER_GAG_FLAG,
+	    	        USER_DEL_FLAG,
+	    	        USER_TEL,
+	    	        USER_QQ,
+	    	        USER_MAIL,
+	    	        USER_DESC,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getUserInfoList" resultMap="UserInfoResult">
+        select
+        	<include refid="UserInfo-FIELDS" />
+        from
+        	T_USER_INFO
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="userId">
+            USER_ID = #userId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userCode">
+            USER_CODE = #userCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userWeixinName">
+            USER_WEIXIN_NAME = #userWeixinName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userName">
+            USER_NAME = #userName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userPasscard">
+            USER_PASSCARD = #userPasscard# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userVipFlag">
+            USER_VIP_FLAG = #userVipFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userGagFlag">
+            USER_GAG_FLAG = #userGagFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userDelFlag">
+            USER_DEL_FLAG = #userDelFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userTel">
+            USER_TEL = #userTel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userQq">
+            USER_QQ = #userQq# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userMail">
+            USER_MAIL = #userMail# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userDesc">
+            USER_DESC = #userDesc# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getUserInfoObject" resultMap="UserInfoResult">
+        select
+          <include refid="UserInfo-FIELDS" />
+        from
+          T_USER_INFO
+    where 1=1 
+          AND USER_ID = #userId#
+        </select>
+
+    <select id="getUserInfoCounts" parameterClass="int" >
+        select
+          count(1)
+        from
+          T_USER_INFO
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="userId">
+            USER_ID = #userId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userCode">
+            USER_CODE = #userCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userWeixinName">
+            USER_WEIXIN_NAME = #userWeixinName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userName">
+            USER_NAME = #userName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userPasscard">
+            USER_PASSCARD = #userPasscard# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userVipFlag">
+            USER_VIP_FLAG = #userVipFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userGagFlag">
+            USER_GAG_FLAG = #userGagFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userDelFlag">
+            USER_DEL_FLAG = #userDelFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userTel">
+            USER_TEL = #userTel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userQq">
+            USER_QQ = #userQq# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userMail">
+            USER_MAIL = #userMail# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userDesc">
+            USER_DESC = #userDesc# </isNotEmpty>
+            </select>
+
+	<insert id="insertUserInfo" parameterClass="UserInfo">  
+    	insert into T_USER_INFO  ( 
+    		 	             userId,
+	         	             userCode,
+	         	             userWeixinName,
+	         	             userName,
+	         	             userPasscard,
+	         	             userVipFlag,
+	         	             userGagFlag,
+	         	             userDelFlag,
+	         	             userTel,
+	         	             userQq,
+	         	             userMail,
+	         	             userDesc,
+	         	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #userId#,
+	    	        #userCode#,
+	    	        #userWeixinName#,
+	    	        #userName#,
+	    	        #userPasscard#,
+	    	        #userVipFlag#,
+	    	        #userGagFlag#,
+	    	        #userDelFlag#,
+	    	        #userTel#,
+	    	        #userQq#,
+	    	        #userMail#,
+	    	        #userDesc#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);      
+    <selectKey resultClass="long" keyProperty="id">
+		    select last_insert_id() as id
+		</selectKey>    
+ 	</insert> 
+
+	<update id="updateUserInfo" parameterClass="UserInfo">  
+     update T_USER_INFO 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="userId">          
+                    USER_ID=#userId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userCode">          
+                    USER_CODE=#userCode#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userWeixinName">          
+                    USER_WEIXIN_NAME=#userWeixinName#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userName">          
+                    USER_NAME=#userName#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userPasscard">          
+                    USER_PASSCARD=#userPasscard#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userVipFlag">          
+                    USER_VIP_FLAG=#userVipFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userGagFlag">          
+                    USER_GAG_FLAG=#userGagFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userDelFlag">          
+                    USER_DEL_FLAG=#userDelFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userTel">          
+                    USER_TEL=#userTel#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userQq">          
+                    USER_QQ=#userQq#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userMail">          
+                    USER_MAIL=#userMail#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userDesc">          
+                    USER_DESC=#userDesc#
+               </isNotNull>
+	                  <isNotNull prepend="," property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND USER_ID = #userId#
+     	</update> 
+	
+	<delete id="deleteUserInfo" parameterClass="long">
+		delete from T_USER_INFO where 1=1
+		    			  AND USER_ID = #userId#
+    		</delete>
+   
+</sqlMap>

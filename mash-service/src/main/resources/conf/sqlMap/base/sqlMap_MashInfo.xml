@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="MashInfo">
+	<typeAlias alias="MashInfo" type="com.izpzp.mash.entity.MashInfo" />
+
+	<resultMap id="MashInfoResult" class="MashInfo">
+			        <result property="mashId" column="MASH_ID" />
+	    	        <result property="baseValue" column="BASE_VALUE" />
+	    	        <result property="mashValue" column="MASH_VALUE" />
+	    	        <result property="mashActId" column="MASH_ACT_ID" />
+	    	        <result property="mashContent" column="MASH_CONTENT" />
+	    	        <result property="userId" column="USER_ID" />
+	    	        <result property="userName" column="USER_NAME" />
+	    	        <result property="mashNum" column="MASH_NUM" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="MashInfo-FIELDS">
+			        MASH_ID,
+	    	        BASE_VALUE,
+	    	        MASH_VALUE,
+	    	        MASH_ACT_ID,
+	    	        MASH_CONTENT,
+	    	        USER_ID,
+	    	        USER_NAME,
+	    	        MASH_NUM,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getMashInfoList" resultMap="MashInfoResult">
+        select
+        	<include refid="MashInfo-FIELDS" />
+        from
+        	T_MASH_INFO
+    </select>
+
+    <select id="getMashInfoObject" resultMap="MashInfoResult">
+        select
+          <include refid="MashInfo-FIELDS" />
+        from
+          T_MASH_INFO
+    where 1=1 
+          AND MASH_ID = #mashId#
+        </select>
+
+	<insert id="insertMashInfo" parameterClass="MashInfo">  
+    	insert into T_MASH_INFO  ( 
+    		 	             mashId,
+	         	             baseValue,
+	         	             mashValue,
+	         	             mashActId,
+	         	             mashContent,
+	         	             userId,
+	         	             userName,
+	         	             mashNum,
+	         	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #mashId#,
+	    	        #baseValue#,
+	    	        #mashValue#,
+	    	        #mashActId#,
+	    	        #mashContent#,
+	    	        #userId#,
+	    	        #userName#,
+	    	        #mashNum#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);      
+    <selectKey resultClass="long" keyProperty="id">
+		    select last_insert_id() as id
+		</selectKey>    
+ 	</insert> 
+
+	<update id="updateMashInfo" parameterClass="MashInfo">  
+     update T_MASH_INFO 
+      <dynamic prepend="set">
+	       	           <isNotNull prepend="," property="baseValue">          
+                    BASE_VALUE=#baseValue#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="mashValue">          
+                    MASH_VALUE=#mashValue#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="mashActId">          
+                    MASH_ACT_ID=#mashActId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="mashContent">          
+                    MASH_CONTENT=#mashContent#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userId">          
+                    USER_ID=#userId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userName">          
+                    USER_NAME=#userName#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="mashNum">          
+                    MASH_NUM=#mashNum#
+               </isNotNull>
+	                  <isNotNull prepend="," property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND MASH_ID = #mashId#
+     	</update> 
+	
+	<delete id="deleteMashInfo" parameterClass="long">
+		delete from T_MASH_INFO where 1=1
+		    			  AND MASH_ID = #mashId#
+    </delete>
+   
+   	<select id="getMashRand2List" resultMap="MashInfoResult">
+        select
+        	<include refid="MashInfo-FIELDS" />
+        from
+        	T_MASH_INFO 
+			WHERE 1=1 
+			ORDER BY  RAND() LIMIT 0,2 
+    </select>
+   
+    <select id="getMashSort" resultMap="MashInfoResult">
+        select
+        	<include refid="MashInfo-FIELDS" />
+        from
+        	T_MASH_INFO 
+			WHERE 1=1 
+			ORDER BY MASH_VALUE DESC LIMIT 0,10 
+    </select>
+   
+    <select id="getNewMashSort" resultMap="MashInfoResult">
+        select
+        	<include refid="MashInfo-FIELDS" />
+        from
+        	T_MASH_INFO 
+			WHERE 1=1 
+			ORDER BY UPDATE_DTTM AND MASH_VALUE DESC LIMIT 0,10 
+    </select>
+   
+</sqlMap>

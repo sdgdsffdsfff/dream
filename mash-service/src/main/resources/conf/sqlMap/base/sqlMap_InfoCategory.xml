@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="InfoCategory">
+	<typeAlias alias="InfoCategory" type="com.izpzp.mash.entity.InfoCategory" />
+	<typeAlias alias="SearchInfoCategoryBean" type="com.izpzp.mash.intf.dto.SearchInfoCategoryBean" />
+
+	<resultMap id="InfoCategoryResult" class="InfoCategory">
+			        <result property="categoryId" column="CATEGORY_ID" />
+	    	        <result property="categoryCode" column="CATEGORY_CODE" />
+	    	        <result property="categoryName" column="CATEGORY_NAME" />
+	    	        <result property="categoryUrl" column="CATEGORY_URL" />
+	    	        <result property="categoryImgUrl" column="CATEGORY_IMG_URL" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="InfoCategory-FIELDS">
+			        CATEGORY_ID,
+	    	        CATEGORY_CODE,
+	    	        CATEGORY_NAME,
+	    	        CATEGORY_URL,
+	    	        CATEGORY_IMG_URL,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getInfoCategoryList" resultMap="InfoCategoryResult">
+        select
+        	<include refid="InfoCategory-FIELDS" />
+        from
+        	T_INFO_CATEGORY
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="categoryId">
+            CATEGORY_ID = #categoryId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryName">
+            CATEGORY_NAME = #categoryName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryUrl">
+            CATEGORY_URL = #categoryUrl# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryImgUrl">
+            CATEGORY_IMG_URL = #categoryImgUrl# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getInfoCategoryObject" resultMap="InfoCategoryResult">
+        select
+          <include refid="InfoCategory-FIELDS" />
+        from
+          T_INFO_CATEGORY
+    where 1=1 
+          AND CATEGORY_ID = #categoryId#
+        </select>
+
+    <select id="getInfoCategoryCounts" parameterClass="SearchInfoCategoryBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_INFO_CATEGORY
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="categoryId">
+            CATEGORY_ID = #categoryId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryCode">
+            CATEGORY_CODE = #categoryCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryName">
+            CATEGORY_NAME = #categoryName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryUrl">
+            CATEGORY_URL = #categoryUrl# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="categoryImgUrl">
+            CATEGORY_IMG_URL = #categoryImgUrl# </isNotEmpty>
+            </select>
+
+	<insert id="insertInfoCategory" parameterClass="InfoCategory">  
+    	insert into T_INFO_CATEGORY  ( 
+    		 	             categoryId,
+	         	             categoryCode,
+	         	             categoryName,
+	         	             categoryUrl,
+	         	             categoryImgUrl,
+	         	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #categoryId#,
+	    	        #categoryCode#,
+	    	        #categoryName#,
+	    	        #categoryUrl#,
+	    	        #categoryImgUrl#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);      
+    <selectKey resultClass="long" keyProperty="id">
+		    select last_insert_id() as id
+		</selectKey>    
+ 	</insert> 
+
+	<update id="updateInfoCategory" parameterClass="InfoCategory">  
+     update T_INFO_CATEGORY 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="categoryId">          
+                    CATEGORY_ID=#categoryId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="categoryCode">          
+                    CATEGORY_CODE=#categoryCode#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="categoryName">          
+                    CATEGORY_NAME=#categoryName#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="categoryUrl">          
+                    CATEGORY_URL=#categoryUrl#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="categoryImgUrl">          
+                    CATEGORY_IMG_URL=#categoryImgUrl#
+               </isNotNull>
+	                  <isNotNull prepend="," property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND CATEGORY_ID = #categoryId#
+     	</update> 
+	
+	<delete id="deleteInfoCategory" parameterClass="long">
+		delete from T_INFO_CATEGORY where 1=1
+		    			  AND CATEGORY_ID = #categoryId#
+    		</delete>
+   
+</sqlMap>

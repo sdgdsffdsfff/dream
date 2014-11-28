@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="BaseMash">
+	<typeAlias alias="baseMash" type="com.izpzp.mash.entity.BaseMash" />
+
+	<resultMap id="baseMashResult" class="baseMash">
+		<result property="baseValue" column="USER_ID" />
+		<result property="mashValue" column="ROLE" />
+	</resultMap>
+
+	<sql id="USER-FIELDS">
+		USER_ID,PASSWORD,ROLE
+	</sql>
+
+	<select id="getUserByUserId" resultMap="baseMashResult"
+		parameterClass="string">
+		select
+		<include refid="USER-FIELDS" />
+		from
+		USER
+		where
+		USER_ID = #baseValue#
+	</select>
+
+</sqlMap>

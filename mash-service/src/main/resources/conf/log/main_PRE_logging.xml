@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false">
+	<property name="LOG_PATH" value="/opt/log/istore-web" />
+
+	<!-- 输出到控制台 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level%logger{36} %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 业务模块 -->
+	<appender name="service" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}\service\service.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}\service\service.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level%logger{36} %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- job、Lisnter模块 -->
+	<appender name="job" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}\job\job.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}\job\job.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level%logger{36} %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 接口服务模块 
+	<appender name="esb" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}\esb\esb.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}\interface\interface.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level%logger{36} %msg%n</pattern>
+		</encoder>
+	</appender>
+	-->
+    <!--  esb 调用端相关日志 -->
+    <appender name="esb.client" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<prudent>true</prudent>
+		<file>${LOG_PATH}\esb\esb.client</file>
+		<!-- 日志文件rolling策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}\esb\esb.client.%d{yyyyMMdd}.%i</fileNamePattern>
+			<maxHistory>10</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>200MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} %msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<!--  esb httpclient相关日志 -->
+	<appender name="esb.httpclient" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<prudent>true</prudent>
+		<file>${LOG_PATH}\esb\esb.httpclient</file>
+		<!-- 日志文件rolling策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}\esb\esb.httpclient.%d{yyyyMMdd}.%i</fileNamePattern>
+			<maxHistory>10</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>200MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} %msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<!--  esb httpclient相关日志 -->
+	<appender name="sms.service"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<prudent>true</prudent>
+		<file>${LOG_PATH}\esb\sms.service</file>
+		<!-- 日志文件rolling策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}\esb\sms.service.%d{yyyyMMdd}.%i</fileNamePattern>
+			<maxHistory>10</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>200MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} %msg%n</Pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.suning.nsf.istore" level="INFO" additivity="false">
+		<appender-ref ref="service" />
+	</logger>
+
+	<logger name="job" level="INFO" additivity="false">
+		<appender-ref ref="job" />
+	</logger>
+	
+	<!-- 
+	<logger name="esb" level="INFO" additivity="false">
+		<appender-ref ref="esb" />
+	</logger> 
+	-->
+
+    <logger name="esb.client" level="INFO" additivity="false">
+    	<appender-ref ref="esb.client" />
+    </logger>
+	
+	<logger name="esb.httpclient" level="INFO" additivity="false">
+    	<appender-ref ref="esb.httpclient" />
+    </logger>
+	
+	<logger name="sms.service" level="INFO" additivity="false">
+    	<appender-ref ref="sms.service" />
+    </logger>
+	
+	<root level="warn">
+		<appender-ref ref="service" />
+	</root>
+
+</configuration>

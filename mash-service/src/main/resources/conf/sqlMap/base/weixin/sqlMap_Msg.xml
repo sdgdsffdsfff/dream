@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Msg">
+	<typeAlias alias="Msg" type="com.izpzp.mash.intf.weixin.dto.MsgBean" />
+	<typeAlias alias="SearchMsgBean" type="com.izpzp.mash.intf.weixin.dto.SearchMsgBean" />
+
+	<resultMap id="MsgResult" class="Msg">
+			        <result property="msgId" column="MSG_ID" />
+	    	        <result property="openId" column="OPEN_ID" />
+	    	        <result property="actId" column="ACT_ID" />
+	    	        <result property="msgContext" column="MSG_CONTEXT" />
+	    	        <result property="checkFlag" column="CHECK_FLAG" />
+	    	        <result property="showFlag" column="SHOW_FLAG" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="Msg-FIELDS">
+			        MSG_ID,
+	    	        OPEN_ID,
+	    	        ACT_ID,
+	    	        MSG_CONTEXT,
+	    	        CHECK_FLAG,
+	    	        SHOW_FLAG,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getMsgList" resultMap="MsgResult">
+        select 
+        	<include refid="Msg-FIELDS" />
+        from 
+        	T_MP_MSG 
+        WHERE 1=1 
+		    <isNotEmpty prepend=" AND " property="binGo"> 
+             OPEN_ID NOT IN (SELECT OPEN_ID FROM T_MP_WINNING WHERE 1=1 
+			 <isNotEmpty prepend=" " property="actId">
+             AND ACT_ID = #actId# 
+			 </isNotEmpty> 
+			 )
+			</isNotEmpty>
+                <isNotEmpty prepend=" AND " property="msgId">
+            MSG_ID = #msgId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="openId">
+            OPEN_ID = #openId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actId">
+            ACT_ID = #actId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="msgContext">
+            MSG_CONTEXT = #msgContext# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="checkFlag">
+            CHECK_FLAG = #checkFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="showFlag">
+            SHOW_FLAG = #showFlag# </isNotEmpty>
+			 <isNotEmpty prepend=" " property="groupOpenId">
+			      GROUP BY OPEN_ID 
+             </isNotEmpty>
+			    <isNotEmpty prepend=" " property="orderRand">
+              ORDER BY rand() </isNotEmpty> 
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getMsgObject" resultMap="MsgResult">
+        select
+          <include refid="Msg-FIELDS" />
+        from
+          T_MP_MSG
+    where 1=1 
+          AND MSG_ID = #msgId#
+        </select>
+
+    <select id="getMsgCounts" parameterClass="SearchMsgBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_MP_MSG
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="msgId">
+            MSG_ID = #msgId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="openId">
+            OPEN_ID = #openId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actId">
+            ACT_ID = #actId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="msgContext">
+            MSG_CONTEXT = #msgContext# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="checkFlag">
+            CHECK_FLAG = #checkFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="showFlag">
+            SHOW_FLAG = #showFlag# </isNotEmpty>
+			    <isNotEmpty prepend=" " property="userCountsFlag">
+            GROUP BY OPEN_ID </isNotEmpty>
+            </select>
+			
+	  <select id="getMsgExtCounts" parameterClass="SearchMsgBean" resultClass="java.lang.Integer" >
+	  	SELECT COUNT(1) FROM 
+		(SELECT OPEN_ID FROM T_MP_MSG 
+		WHERE 1=1 
+		          <isNotEmpty prepend=" AND " property="msgId">
+            MSG_ID = #msgId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="openId">
+            OPEN_ID = #openId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actId">
+            ACT_ID = #actId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="msgContext">
+            MSG_CONTEXT = #msgContext# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="checkFlag">
+            CHECK_FLAG = #checkFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="showFlag">
+            SHOW_FLAG = #showFlag# </isNotEmpty>
+		GROUP BY OPEN_ID ) t_mp_msg_temp
+      </select>
+
+	<insert id="insertMsg" parameterClass="Msg">  
+    	insert into T_MP_MSG  ( 
+			        MSG_ID,
+	    	        OPEN_ID,
+	    	        ACT_ID,
+	    	        MSG_CONTEXT,
+	    	        CHECK_FLAG,
+	    	        SHOW_FLAG,
+	    	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #msgId#,
+	    	        #openId#,
+	    	        #actId#,
+	    	        #msgContext#,
+	    	        #checkFlag#,
+	    	        #showFlag#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);
+ 	</insert> 
+
+	<update id="updateMsg" parameterClass="Msg">  
+     update T_MP_MSG 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="msgId">          
+                    MSG_ID=#msgId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="openId">          
+                    OPEN_ID=#openId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="actId">          
+                    ACT_ID=#actId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="msgContext">          
+                    MSG_CONTEXT=#msgContext#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="checkFlag">          
+                    CHECK_FLAG=#checkFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="showFlag">          
+                    SHOW_FLAG=#showFlag#
+               </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND MSG_ID = #msgId#
+		   <isNotNull prepend=" AND " property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+     	</update> 
+	
+		<update id="updateMsgExt" parameterClass="Msg">  
+     update T_MP_MSG 
+      <dynamic prepend="set">
+	       	           <isNotNull prepend="," property="msgContext">          
+                    MSG_CONTEXT=#msgContext#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="checkFlag">          
+                    CHECK_FLAG=#checkFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="showFlag">          
+                    SHOW_FLAG=#showFlag#
+               </isNotNull>
+	                  <isNotNull prepend="," property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND ACT_ID = #actId# AND MSG_ID=#msgId#
+     	</update> 
+	
+	<delete id="deleteMsg" parameterClass="java.lang.Integer">
+		delete from T_MP_MSG where 1=1
+		    			  AND MSG_ID = #msgId#
+    		</delete>
+   
+</sqlMap>

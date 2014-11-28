@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="User">
+	<typeAlias alias="User" type="com.izpzp.mash.intf.weixin.dto.UserBean" />
+	<typeAlias alias="SearchUserBean" type="com.izpzp.mash.intf.weixin.dto.SearchUserBean" />
+
+	<resultMap id="UserResult" class="User">
+			        <result property="userId" column="USER_ID" />
+	    	        <result property="userName" column="USER_NAME" />
+	    	        <result property="password" column="PASSWORD" />
+	    	        <result property="userCode" column="USER_CODE" />
+	    	        <result property="userTel" column="USER_TEL" />
+	    	        <result property="userDesc" column="USER_DESC" />
+	    	        <result property="enabledFlag" column="ENABLED_FLAG" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="User-FIELDS">
+			        USER_ID,
+	    	        USER_NAME,
+	    	        PASSWORD,
+	    	        USER_CODE,
+	    	        USER_TEL,
+	    	        USER_DESC,
+	    	        ENABLED_FLAG,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getUserList" resultMap="UserResult">
+        select
+        	<include refid="User-FIELDS" />
+        from
+        	T_MP_USER
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="userId">
+            USER_ID = #userId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userName">
+            USER_NAME = #userName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="password">
+            PASSWORD = #password# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userCode">
+            USER_CODE = #userCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userTel">
+            USER_TEL = #userTel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userDesc">
+            USER_DESC = #userDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="enabledFlag">
+            ENABLED_FLAG = #enabledFlag# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getUserObject" resultMap="UserResult">
+        select
+          <include refid="User-FIELDS" />
+        from
+          T_MP_USER
+    where 1=1 
+          AND USER_ID = #userId#
+        </select>
+
+    <select id="getUserCounts" parameterClass="int" >
+        select
+          count(1)
+        from
+          T_MP_USER
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="userId">
+            USER_ID = #userId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userName">
+            USER_NAME = #userName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="password">
+            PASSWORD = #password# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userCode">
+            USER_CODE = #userCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userTel">
+            USER_TEL = #userTel# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="userDesc">
+            USER_DESC = #userDesc# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="enabledFlag">
+            ENABLED_FLAG = #enabledFlag# </isNotEmpty>
+            </select>
+
+	<insert id="insertUser" parameterClass="User">  
+    	insert into T_MP_USER  ( 
+			        USER_ID,
+	    	        USER_NAME,
+	    	        PASSWORD,
+	    	        USER_CODE,
+	    	        USER_TEL,
+	    	        USER_DESC,
+	    	        ENABLED_FLAG,
+	    	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #userId#,
+	    	        #userName#,
+	    	        #password#,
+	    	        #userCode#,
+	    	        #userTel#,
+	    	        #userDesc#,
+	    	        #enabledFlag#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);      
+    <selectKey resultClass="long" keyProperty="id">
+		    select last_insert_id() as id
+		</selectKey>    
+ 	</insert> 
+
+	<update id="updateUser" parameterClass="User">  
+     update T_MP_USER 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="userId">          
+                    USER_ID=#userId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userName">          
+                    USER_NAME=#userName#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="password">          
+                    PASSWORD=#password#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userCode">          
+                    USER_CODE=#userCode#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userTel">          
+                    USER_TEL=#userTel#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="userDesc">          
+                    USER_DESC=#userDesc#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="enabledFlag">          
+                    ENABLED_FLAG=#enabledFlag#
+               </isNotNull>
+	                  <isNotNull prepend="," property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND USER_ID = #userId#
+     	</update> 
+	
+	<delete id="deleteUser" parameterClass="java.lang.Integer">
+		delete from T_MP_USER where 1=1
+		    			  AND USER_ID = #userId#
+    		</delete>
+   
+</sqlMap>

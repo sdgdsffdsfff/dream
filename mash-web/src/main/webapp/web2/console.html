@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>管理后台</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/sncontrols.css"/>
+	<link rel="stylesheet" href="css/cloud.css"/>
+	
+	<script type="text/javascript" src="libs/angular.min.js"></script>
+	<script type="text/javascript" src="libs/angular-route.min.js"></script>
+	
+	<script type="text/javascript" src="libs/jquery.min.js"></script>
+	<!-- build:js({.tmp,app}) scripts/app.js -->
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/services.js"></script>
+	<script type="text/javascript" src="js/filter.js"></script>
+	<script type="text/javascript" src="js/controls.js"></script>
+	
+	<script type="text/javascript" src="js/controllers/portal.js"></script>
+	<script type="text/javascript" src="js/controllers/weixin/pubAccount.js"></script>
+	<script type="text/javascript" src="js/controllers/weixin/addPubAccount.js"></script>
+	<script type="text/javascript" src="js/controllers/weixin/activityIndex.js"></script>
+	<script type="text/javascript" src="js/controllers/weixin/activityDetail.js"></script>
+	<script type="text/javascript" src="js/controllers/weixin/lotteryIndex.js"></script>
+	<script type="text/javascript" src="js/controllers/weixin/addLotteryRule.js"></script>
+	<script type="text/javascript" src="js/controllers/weixin/lotteryStatistic.js"></script>
+	<script type="text/javascript" src="js/controllers/weixin/chargeLottery.js"></script>
+	<script type="text/javascript" src="js/controllers/weixin/wallInfo.js"></script>
+	<!-- endbuild -->
+</head>
+<body ng-app="console">
+<div class="cloud-nav" ng-controller="PortalCtrl" ng-include="'partials/portal/nav.html'"></div>
+<div ng-view class="cloud-main"></div>
+<div id="hintContainer" class="sn-hint-container">
+	<div class="sn-hint fade" style="display: block">
+		<h3 class="popover-title">当前执行的任务</h3>
+		<div class="popover-content">共0条</div>
+	</div>
+</div>
+</body>
+</html>

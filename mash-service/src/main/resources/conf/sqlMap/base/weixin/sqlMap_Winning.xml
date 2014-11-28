@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Winning">
+	<typeAlias alias="Winning" type="com.izpzp.mash.intf.weixin.dto.WinningBean" />
+	<typeAlias alias="SearchWinningBean" type="com.izpzp.mash.intf.weixin.dto.SearchWinningBean" />
+
+	<resultMap id="WinningResult" class="Winning">
+			        <result property="winId" column="WIN_ID" />
+	    	        <result property="openId" column="OPEN_ID" />
+	    	        <result property="awardId" column="AWARD_ID" />
+	    	        <result property="actId" column="ACT_ID" />
+	    	        <result property="bingoFlag" column="BINGO_FLAG" />
+	    	        <result property="bingoCode" column="BINGO_CODE" />
+	    	        <result property="bingoName" column="BINGO_NAME" />
+	    	        <result property="bingoTel" column="BINGO_TEL" />
+	    	    <result property="creator" column="CREATOR" />
+	    <result property="updater" column="UPDATER" />
+	</resultMap>
+
+	<sql id="Winning-FIELDS">
+			        WIN_ID,
+	    	        OPEN_ID,
+	    	        AWARD_ID,
+	    	        ACT_ID,
+	    	        BINGO_FLAG,
+	    	        BINGO_CODE,
+	    	        BINGO_NAME,
+	    	        BINGO_TEL,
+	    	    CREATOR,UPDATER,UPDATE_DTTM
+	</sql>
+
+	<select id="getWinningList" resultMap="WinningResult">
+        select
+        	<include refid="Winning-FIELDS" />
+        from
+        	T_MP_WINNING
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="winId">
+            WIN_ID = #winId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="openId">
+            OPEN_ID = #openId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardId">
+            AWARD_ID = #awardId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actId">
+            ACT_ID = #actId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="bingoFlag">
+            BINGO_FLAG = #bingoFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="bingoCode">
+            BINGO_CODE = #bingoCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="bingoName">
+            BINGO_NAME = #bingoName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="bingoTel">
+            BINGO_TEL = #bingoTel# </isNotEmpty>
+                <isNotEmpty prepend="  " property="startIndex">
+            LIMIT #startIndex#,#maxCount# </isNotEmpty>
+    </select>
+
+    <select id="getWinningObject" resultMap="WinningResult">
+        select
+          <include refid="Winning-FIELDS" />
+        from
+          T_MP_WINNING
+    where 1=1 
+          AND WIN_ID = #winId#
+        </select>
+
+    <select id="getWinningCounts" parameterClass="SearchWinningBean" resultClass="java.lang.Integer" >
+        select
+          count(1)
+        from
+          T_MP_WINNING
+        WHERE 1=1 
+                <isNotEmpty prepend=" AND " property="winId">
+            WIN_ID = #winId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="openId">
+            OPEN_ID = #openId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="awardId">
+            AWARD_ID = #awardId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="actId">
+            ACT_ID = #actId# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="bingoFlag">
+            BINGO_FLAG = #bingoFlag# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="bingoCode">
+            BINGO_CODE = #bingoCode# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="bingoName">
+            BINGO_NAME = #bingoName# </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="bingoTel">
+            BINGO_TEL = #bingoTel# </isNotEmpty>
+            </select>
+
+	<insert id="insertWinning" parameterClass="Winning">  
+    	insert into T_MP_WINNING  ( 
+			        WIN_ID,
+	    	        OPEN_ID,
+	    	        AWARD_ID,
+	    	        ACT_ID,
+	    	        BINGO_FLAG,
+	    	        BINGO_CODE,
+	    	        BINGO_NAME,
+	    	        BINGO_TEL,
+	    	         CREATOR,UPDATER,UPDATE_DTTM
+    	) values (
+    		        #winId#,
+	    	        #openId#,
+	    	        #awardId#,
+	    	        #actId#,
+	    	        #bingoFlag#,
+	    	        #bingoCode#,
+	    	        #bingoName#,
+	    	        #bingoTel#,
+	        	#creator#,
+    	#updater#,
+    	now()
+    	);
+ 	</insert> 
+
+	<update id="updateWinning" parameterClass="Winning">  
+     update T_MP_WINNING 
+      <dynamic prepend="set">
+      	   	           <isNotNull prepend="," property="winId">          
+                    WIN_ID=#winId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="openId">          
+                    OPEN_ID=#openId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="awardId">          
+                    AWARD_ID=#awardId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="actId">          
+                    ACT_ID=#actId#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="bingoFlag">          
+                    BINGO_FLAG=#bingoFlag#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="bingoCode">          
+                    BINGO_CODE=#bingoCode#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="bingoName">          
+                    BINGO_NAME=#bingoName#
+               </isNotNull>
+	       	           <isNotNull prepend="," property="bingoTel">          
+                    BINGO_TEL=#bingoTel#
+               </isNotNull>
+           <isNotNull prepend="," property="updater">          
+               UPDATER=#updater#
+           </isNotNull>
+           <isNotNull prepend="," property="updateDttm">          
+               UPDATE_DTTM=#updateDttm#
+           </isNotNull>
+      </dynamic>
+     where 1=1
+         	AND WIN_ID = #winId#
+		   <isNotNull prepend=" AND " property="creator">          
+               CREATOR=#creator#
+           </isNotNull>
+     	</update> 
+	
+	<delete id="deleteWinning" parameterClass="java.lang.Integer">
+		delete from T_MP_WINNING where 1=1
+		    			  AND WIN_ID = #winId#
+    		</delete>
+   
+</sqlMap>

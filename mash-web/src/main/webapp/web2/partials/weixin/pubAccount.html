@@ -1,0 +1,45 @@
+<div class="col-md-12 module-header">
+    <div class="header">
+        <h2 class="title">公共账号维护</h2>
+    </div>
+</div>
+<div class="col-md-12">
+	<form class="navbar-form navbar-left col-md-12" role="form">
+		<div class="form-group">
+			<button class="btn btn-primary" ng-click="addPubAccount()">新增公共账号</button>
+		</div>
+	</form>
+</div>
+<div class="col-md-12">
+	<table class="table table-bordered table-hover table-striped">
+		<thead>
+			<tr>
+				<th>mpId</th>
+				<th>Token</th>
+				<th>微信号</th>
+				<th>AccessToken</th>
+				<th>AppId</th>
+				<th>AppSecret</th>
+				<th>AccessToken失效时间</th>
+				<th>认证标识</th>
+				<th colspan="2">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-center">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><a href="javascript:;" >修改</a></td>
+				<td><a href="javascript:;" >删除</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<sn-pager style="float:right;" ng-show="showPageIndex()" itemsPerPage="{{pageSize}}" totalItems="{{totalCount}}"
+		          listSize="10"></sn-pager>
+</div>
