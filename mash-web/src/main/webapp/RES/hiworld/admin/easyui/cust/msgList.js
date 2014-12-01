@@ -118,6 +118,19 @@ var toolbar = [{
 
 $(function(){
 	
+	/*
+	 * 点击查询按钮
+	 */
+	$("#queryBtn").click(function(){
+		var actId = $("#actIdInputId").textbox('getValue');
+		var checkFlag = $("#checkFlagOptionId").textbox('getValue');
+		var showFlag = $("#showFlagOptionId").textbox('getValue');
+		postData.actId = actId;
+		postData.checkFlag = checkFlag;
+		postData.showFlag = showFlag;
+		reloadData(postData);
+	});
+	
 	$('#dg').datagrid({
         pageNumber: 1,
         pagination: true, 

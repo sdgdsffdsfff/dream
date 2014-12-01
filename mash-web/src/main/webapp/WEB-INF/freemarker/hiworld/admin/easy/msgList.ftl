@@ -18,7 +18,10 @@
     <div id="p" class="easyui-panel" title="维护信息上墙" 
         style="width:100%;height:80px;padding:10px;background:#fafafa;"
         data-options="" >
-        
+                        活动id：<input id="actIdInputId" class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:100px">
+                        审核标识：<select id="checkFlagOptionId" class="easyui-combobox" name="checkFlag"><option value='' >全部</option><option value="1">通过审核</option><option value="0">未通过审核</option></select>
+                        上墙标识：<select id="showFlagOptionId" class="easyui-combobox" name="showFlag"><option value='' >全部</option><option value="1">已上墙</option><option value="0">待上墙</option></select>
+        <a id="queryBtn" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
     </div>
 
 	<table id="dg" title="公众信息列表" style="width:100%;height:370px" data-options="

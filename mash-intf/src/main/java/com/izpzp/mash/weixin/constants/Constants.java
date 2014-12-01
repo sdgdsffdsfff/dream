@@ -90,4 +90,9 @@ public class Constants {
      * 默认账户
      */
     public static final String DEF_ADMIN = null;
+    
+    /**
+     * 我要中大奖
+     */
+    public static final String I_BINGO = "我要中大奖";
 }

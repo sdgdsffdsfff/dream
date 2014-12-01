@@ -352,8 +352,8 @@ public class ShowTheWorldAdminServiceImpl implements ShowTheWorldAdminService {
             searchMsgBean.setStartIndex(Constants.NUM_0);
             searchMsgBean.setMaxCount(awardUserNum);
             //抽奖去重
-            searchMsgBean.setBinGo(Constants.SUCCESS);
-            searchMsgBean.setGroupOpenId(Constants.SUCCESS);
+            searchMsgBean.setBinGo(Constants.ORDER_RAND);
+            searchMsgBean.setGroupOpenId(Constants.ORDER_RAND);
             List<MsgBean> msgList = msgDao.getMsgList(searchMsgBean);
             if(null != msgList){
                 //将抽中的用户存入中奖表

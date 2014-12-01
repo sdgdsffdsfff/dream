@@ -15,7 +15,13 @@
 	</script>
 </head>
 <body>
-
+    <div id="p" class="easyui-panel" title="中奖规则" 
+        style="width:100%;height:80px;padding:10px;background:#fafafa;"
+        data-options="" >
+                        活动id：<input id="actIdInputId" class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:100px">
+        <a id="queryBtn" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+    </div>
+    
 	<table id="dg" title="中奖规则（奖品）列表" style="width:100%;height:370px" data-options="
 				rownumbers:true,
 				singleSelect:true,

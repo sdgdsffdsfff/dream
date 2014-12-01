@@ -10,6 +10,7 @@
  */
 package com.izpzp.mash.weixin.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,14 +21,20 @@ import com.izpzp.mash.constants.NJ518Constants;
 import com.izpzp.mash.intf.AccountInfoDao;
 import com.izpzp.mash.intf.ActDao;
 import com.izpzp.mash.intf.MsgDao;
+import com.izpzp.mash.intf.WinningDao;
 import com.izpzp.mash.intf.weixin.dto.AcceptMsg;
 import com.izpzp.mash.intf.weixin.dto.AccountInfoBean;
 import com.izpzp.mash.intf.weixin.dto.ActBean;
+import com.izpzp.mash.intf.weixin.dto.AwardBean;
 import com.izpzp.mash.intf.weixin.dto.MsgBean;
 import com.izpzp.mash.intf.weixin.dto.ResponseMsg;
 import com.izpzp.mash.intf.weixin.dto.SearchActBean;
+import com.izpzp.mash.intf.weixin.dto.SearchAwardBean;
+import com.izpzp.mash.intf.weixin.dto.SearchWinningBean;
+import com.izpzp.mash.intf.weixin.dto.WinningBean;
 import com.izpzp.mash.util.XStreamUtil;
 import com.izpzp.mash.weixin.constants.Constants;
+import com.izpzp.mash.weixin.intf.ShowTheWorldAdminService;
 import com.izpzp.mash.weixin.intf.WeiXinService;
 import com.thoughtworks.xstream.XStream;
 
@@ -50,6 +57,12 @@ public class WeiXinServiceImpl implements WeiXinService {
     
     @Autowired
     MsgDao msgDao;
+    
+    @Autowired
+    WinningDao winningDao;
+    
+    @Autowired
+    ShowTheWorldAdminService showTheWorldAdminService;
     
     /* (non-Javadoc)
      * @see com.izpzp.mash.weixin.intf.WeiXinService#acceptMsg(java.lang.String)
@@ -117,21 +130,57 @@ public class WeiXinServiceImpl implements WeiXinService {
                             result = this.showTheWorld(msgBean);
                             //标记已上墙
                             flag = true;
+                            //回复感谢参加活动-有惊喜发现
+                            ResponseMsg responseMsg = new ResponseMsg();
+                            responseMsg.setToUserName(acceptMsg.getToUserName());
+                            responseMsg.setFromUserName(acceptMsg.getFromUserName());
+                            responseMsg.setCreateTime((int)new Date().getTime());
+                            responseMsg.setMsgType("text");
+                            responseMsg.setContent("感谢您参加("+actBean.getActName()+")活动，请继续关注，后面还有小礼品和惊喜等着您！");
+                            result = this.getResponse(responseMsg);
                             break;
                         }
                     }
                     //若未集中上墙活动-则回复该活动的描述与规则
                     if(!flag){
-                        for (ActBean actBean : actList) {
-                            //当存在该账号活动的时候
-                            if(acceptMsg.getToUserName().equals(actBean.getWechatCode())){
-                                ResponseMsg responseMsg = new ResponseMsg();
-                                responseMsg.setToUserName(acceptMsg.getToUserName());
-                                responseMsg.setFromUserName(acceptMsg.getFromUserName());
-                                responseMsg.setCreateTime(12);
-                                responseMsg.setMsgType("text");
-                                responseMsg.setContent("欢迎关注("+actBean.getActName()+")活动，"+actBean.getActLogo());
-                                result = this.getResponse(responseMsg);
+                        if(acceptMsg.getContent().equals(Constants.I_BINGO)){
+                            String openId = acceptMsg.getFromUserName();
+                            WinningBean winningBean = null;
+                            SearchWinningBean searchWinningBean = new SearchWinningBean();
+                            searchWinningBean.setOpenId(openId);
+                            searchWinningBean.setBingoFlag(Constants.NUM_0);
+                            List<WinningBean> winningList = winningDao.getWinningList(searchWinningBean);
+                            if(null != winningList && Constants.NUM_0 < winningList.size()){
+                                winningBean = winningList.get(Constants.NUM_0);
+                            }
+                            //回复中奖消息
+                            ResponseMsg responseMsg = new ResponseMsg();
+                            responseMsg.setToUserName(acceptMsg.getToUserName());
+                            responseMsg.setFromUserName(acceptMsg.getFromUserName());
+                            responseMsg.setCreateTime((int)new Date().getTime());
+                            responseMsg.setMsgType("text");
+                            if(null != winningBean){
+                                SearchAwardBean searchAwardBean = new SearchAwardBean();
+                                searchAwardBean.setActId(winningBean.getActId());
+                                searchAwardBean.setAwardId(winningBean.getAwardId());
+                                AwardBean awardBean = showTheWorldAdminService.getAward(searchAwardBean);
+                                responseMsg.setContent("恭喜您获得" + awardBean.getAwardName()+"，奖品是"+awardBean.getAwardCont()+"，请您凭领奖码:("+winningBean.getBingoCode()+")到服务台领奖！");
+                            }else{
+                                responseMsg.setContent("感谢您的参与，敬请关注我们的其他相关活动！");
+                            }
+                            result = this.getResponse(responseMsg);
+                        }else{
+                            for (ActBean actBean : actList) {
+                                //当存在该账号活动的时候
+                                if(acceptMsg.getToUserName().equals(actBean.getWechatCode())){
+                                    ResponseMsg responseMsg = new ResponseMsg();
+                                    responseMsg.setToUserName(acceptMsg.getToUserName());
+                                    responseMsg.setFromUserName(acceptMsg.getFromUserName());
+                                    responseMsg.setCreateTime((int)new Date().getTime());
+                                    responseMsg.setMsgType("text");
+                                    responseMsg.setContent("欢迎关注("+actBean.getActName()+")活动，"+actBean.getActLogo());
+                                    result = this.getResponse(responseMsg);
+                                }
                             }
                         }
                     }

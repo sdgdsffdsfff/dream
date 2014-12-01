@@ -196,7 +196,7 @@ $(function(){
 	/*
 	 * 点击摇奖按钮-开始摇奖
 	 */
-	$("#queryBtn").click(function(){
+	$("#bingoBtn").click(function(){
 		var actId = $("#actIdInputId").textbox('getValue');
 		if(actId){
 		    $.ajax({
