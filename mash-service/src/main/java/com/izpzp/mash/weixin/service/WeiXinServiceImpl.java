@@ -24,10 +24,12 @@ import com.izpzp.mash.intf.weixin.dto.AcceptMsg;
 import com.izpzp.mash.intf.weixin.dto.AccountInfoBean;
 import com.izpzp.mash.intf.weixin.dto.ActBean;
 import com.izpzp.mash.intf.weixin.dto.MsgBean;
+import com.izpzp.mash.intf.weixin.dto.ResponseMsg;
 import com.izpzp.mash.intf.weixin.dto.SearchActBean;
 import com.izpzp.mash.util.XStreamUtil;
 import com.izpzp.mash.weixin.constants.Constants;
 import com.izpzp.mash.weixin.intf.WeiXinService;
+import com.thoughtworks.xstream.XStream;
 
 /**
  * 微信服务接口<br> 
@@ -39,7 +41,7 @@ import com.izpzp.mash.weixin.intf.WeiXinService;
  */
 @Service
 public class WeiXinServiceImpl implements WeiXinService {
-
+    
     @Autowired
     AccountInfoDao accountInfoDao;
     
@@ -69,6 +71,7 @@ public class WeiXinServiceImpl implements WeiXinService {
         String result = Constants.FAIL;
         if(null != msgBean){
             msgDao.addMsg(msgBean);
+            //消息发送成功
             result = Constants.SUCCESS;
         }
         return result;
@@ -95,6 +98,7 @@ public class WeiXinServiceImpl implements WeiXinService {
                 searchActBean.setPageSize(NJ518Constants.MAX_NUM);
                 searchActBean.setActOnFlag(Constants.NUM_1);
                 List<ActBean> actList = actDao.getActList(searchActBean);
+                boolean flag = false;
                 //若发布内容中包含有关键词则进行上墙
                 if(null != actList && NJ518Constants.NUM_0 < actList.size()){
                     for (ActBean actBean : actList) {
@@ -111,7 +115,24 @@ public class WeiXinServiceImpl implements WeiXinService {
                             //信息上墙标志-默认未上墙
                             msgBean.setShowFlag(Constants.NUM_0);
                             result = this.showTheWorld(msgBean);
+                            //标记已上墙
+                            flag = true;
                             break;
+                        }
+                    }
+                    //若未集中上墙活动-则回复该活动的描述与规则
+                    if(!flag){
+                        for (ActBean actBean : actList) {
+                            //当存在该账号活动的时候
+                            if(acceptMsg.getToUserName().equals(actBean.getWechatCode())){
+                                ResponseMsg responseMsg = new ResponseMsg();
+                                responseMsg.setToUserName(acceptMsg.getToUserName());
+                                responseMsg.setFromUserName(acceptMsg.getFromUserName());
+                                responseMsg.setCreateTime(12);
+                                responseMsg.setMsgType("text");
+                                responseMsg.setContent("欢迎关注("+actBean.getActName()+")活动，"+actBean.getActLogo());
+                                result = this.getResponse(responseMsg);
+                            }
                         }
                     }
                 }
@@ -131,5 +152,16 @@ public class WeiXinServiceImpl implements WeiXinService {
         }
         return result;
     }
-
+    
+    /**
+     * 生成响应消息
+     */
+    private String getResponse(ResponseMsg responseMsg){
+        String result = "";
+        XStream xstream = XStreamUtil.initXStream(true);
+        xstream.processAnnotations(ResponseMsg.class);
+        result = xstream.toXML(responseMsg);
+        return result;
+    }
+    
 }

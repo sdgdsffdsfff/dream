@@ -28,12 +28,12 @@ public class Constants {
     /**
      * 成功
      */
-    public static final String SUCCESS = "SUCCESS";
+    public static final String SUCCESS = "";
     
     /**
      * 失败
      */
-    public static final String FAIL = "FAIL";
+    public static final String FAIL = "";
     
     /**
      * 数字0

@@ -163,7 +163,7 @@ public class ShowTheWorldAdminServiceImpl implements ShowTheWorldAdminService {
      */
     public boolean saveMsg(MsgBean msgBean) {
         //必须为该账号所有者
-        if(null != msgBean && StringUtils.isNotBlank(msgBean.getCreator())){
+        if(null != msgBean){
             if(null != msgBean.getMsgId()){
                  //调用更新方法
                 msgDao.updateMsg(msgBean);
