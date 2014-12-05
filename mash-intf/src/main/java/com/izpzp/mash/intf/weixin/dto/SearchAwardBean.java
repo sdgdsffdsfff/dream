@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: SearchAwardBean.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-20 下午2:56:17
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -14,7 +14,7 @@ package com.izpzp.mash.intf.weixin.dto;
  * 中奖规则-奖品信息<br> 
  * 中奖规则-奖品信息查询条件
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */

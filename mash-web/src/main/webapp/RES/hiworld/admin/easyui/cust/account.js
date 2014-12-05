@@ -31,6 +31,30 @@ var toolbar = [{
 			myDialog("详情","修改");
 		}
 	}
+},{
+	text:'公众平台配置服务地址',
+	iconCls:'icon-add',
+	handler:function(){
+		var rowData = $('#dg').datagrid("getSelected");
+		if(rowData){
+		    $('#ddtips').dialog({
+		        title: '公众平台配置服务地址',
+		        iconCls:'icon-ok',
+		        width: 350,
+		        height: 120,
+		        closed: false,
+		        cache: false,
+		        modal: true,
+		        content:'<div style="margin-top: 10px;margin-left: 10px;">URL(服务器地址):'+serviceUrl+rowData.mpId+'<br></div>',
+		        buttons:[{
+					text:'确定',
+					handler:function(){
+						$('#ddtips').dialog({closed: true});
+					}
+				}]
+		    });
+		}
+	}
 }];
 
 $(function(){
@@ -112,7 +136,7 @@ function myDialog(title,actionText){
     $('#dd').dialog({
         title: title,
         width: 300,
-        height: 320,
+        height: 340,
         closed: false,
         cache: false,
         modal: true,

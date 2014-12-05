@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: WeiXinServiceImpl.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-17 下午4:25:04
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -42,7 +42,7 @@ import com.thoughtworks.xstream.XStream;
  * 微信服务接口<br> 
  * 微信服务接口
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
@@ -113,7 +113,7 @@ public class WeiXinServiceImpl implements WeiXinService {
                 List<ActBean> actList = actDao.getActList(searchActBean);
                 boolean flag = false;
                 //若发布内容中包含有关键词则进行上墙
-                if(null != actList && NJ518Constants.NUM_0 < actList.size()){
+                if(Constants.MSG_TYPE_TEXT.equals(acceptMsg.getMsgType()) && null != actList && NJ518Constants.NUM_0 < actList.size()){
                     for (ActBean actBean : actList) {
                         //包含该关键字
                         if(acceptMsg.getContent().indexOf(actBean.getTopKeys()) > NJ518Constants.NUM_NEGATIVE_1){
@@ -127,17 +127,14 @@ public class WeiXinServiceImpl implements WeiXinService {
                             msgBean.setMsgContext(acceptMsg.getContent());
                             //信息上墙标志-默认未上墙
                             msgBean.setShowFlag(Constants.NUM_0);
+                            //添加该活动管理员
+                            msgBean.setCreator(actBean.getCreator());
                             result = this.showTheWorld(msgBean);
                             //标记已上墙
                             flag = true;
                             //回复感谢参加活动-有惊喜发现
-                            ResponseMsg responseMsg = new ResponseMsg();
-                            responseMsg.setToUserName(acceptMsg.getToUserName());
-                            responseMsg.setFromUserName(acceptMsg.getFromUserName());
-                            responseMsg.setCreateTime((int)new Date().getTime());
-                            responseMsg.setMsgType("text");
-                            responseMsg.setContent("感谢您参加("+actBean.getActName()+")活动，请继续关注，后面还有小礼品和惊喜等着您！");
-                            result = this.getResponse(responseMsg);
+                            String content = "感谢您参加"+actBean.getActName()+"，请继续关注，后面还有小礼品和惊喜等着您！";
+                            result = this.getResponse(acceptMsg, content);
                             break;
                         }
                     }
@@ -154,32 +151,23 @@ public class WeiXinServiceImpl implements WeiXinService {
                                 winningBean = winningList.get(Constants.NUM_0);
                             }
                             //回复中奖消息
-                            ResponseMsg responseMsg = new ResponseMsg();
-                            responseMsg.setToUserName(acceptMsg.getToUserName());
-                            responseMsg.setFromUserName(acceptMsg.getFromUserName());
-                            responseMsg.setCreateTime((int)new Date().getTime());
-                            responseMsg.setMsgType("text");
+                            String content = "";
                             if(null != winningBean){
                                 SearchAwardBean searchAwardBean = new SearchAwardBean();
                                 searchAwardBean.setActId(winningBean.getActId());
                                 searchAwardBean.setAwardId(winningBean.getAwardId());
                                 AwardBean awardBean = showTheWorldAdminService.getAward(searchAwardBean);
-                                responseMsg.setContent("恭喜您获得" + awardBean.getAwardName()+"，奖品是"+awardBean.getAwardCont()+"，请您凭领奖码:("+winningBean.getBingoCode()+")到服务台领奖！");
+                                content = "恭喜您获得" + awardBean.getAwardName()+"，奖品是"+awardBean.getAwardCont()+"，请您凭领奖码:("+winningBean.getBingoCode()+")到服务台领奖！";
                             }else{
-                                responseMsg.setContent("感谢您的参与，敬请关注我们的其他相关活动！");
+                                content = "感谢您的参与，敬请关注我们的其他相关活动！";
                             }
-                            result = this.getResponse(responseMsg);
+                            result = this.getResponse(acceptMsg, content);
                         }else{
                             for (ActBean actBean : actList) {
                                 //当存在该账号活动的时候
                                 if(acceptMsg.getToUserName().equals(actBean.getWechatCode())){
-                                    ResponseMsg responseMsg = new ResponseMsg();
-                                    responseMsg.setToUserName(acceptMsg.getToUserName());
-                                    responseMsg.setFromUserName(acceptMsg.getFromUserName());
-                                    responseMsg.setCreateTime((int)new Date().getTime());
-                                    responseMsg.setMsgType("text");
-                                    responseMsg.setContent("欢迎关注("+actBean.getActName()+")活动，"+actBean.getActLogo());
-                                    result = this.getResponse(responseMsg);
+                                    String content = "欢迎您参加"+actBean.getActName()+"，"+actBean.getActLogo();
+                                    result = this.getResponse(acceptMsg, content);
                                 }
                             }
                         }
@@ -205,10 +193,16 @@ public class WeiXinServiceImpl implements WeiXinService {
     /**
      * 生成响应消息
      */
-    private String getResponse(ResponseMsg responseMsg){
+    private String getResponse(AcceptMsg acceptMsg, String content){
         String result = "";
         XStream xstream = XStreamUtil.initXStream(true);
         xstream.processAnnotations(ResponseMsg.class);
+        ResponseMsg responseMsg = new ResponseMsg();
+        responseMsg.setToUserName(acceptMsg.getFromUserName());
+        responseMsg.setFromUserName(acceptMsg.getToUserName());
+        responseMsg.setCreateTime(new Date().getTime());
+        responseMsg.setMsgType("text");
+        responseMsg.setContent(content);
         result = xstream.toXML(responseMsg);
         return result;
     }

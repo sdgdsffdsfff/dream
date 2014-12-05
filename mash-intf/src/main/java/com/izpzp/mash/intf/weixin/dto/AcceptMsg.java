@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: AcceptMsg.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-17 上午11:53:06
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -18,7 +18,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * 微信接受信息bean<br> 
  * 微信接受信息bean
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
@@ -42,7 +42,7 @@ public class AcceptMsg implements Serializable {
     /**
      * 消息创建时间 （整型）
      */
-    private Integer CreateTime;
+    private Long CreateTime;
     
     /**
      * text
@@ -88,20 +88,6 @@ public class AcceptMsg implements Serializable {
     }
 
     /**
-     * @return the createTime
-     */
-    public Integer getCreateTime() {
-        return CreateTime;
-    }
-
-    /**
-     * @param createTime the createTime to set
-     */
-    public void setCreateTime(Integer createTime) {
-        CreateTime = createTime;
-    }
-
-    /**
      * @return the msgType
      */
     public String getMsgType() {
@@ -141,6 +127,20 @@ public class AcceptMsg implements Serializable {
      */
     public void setMsgId(String msgId) {
         MsgId = msgId;
+    }
+
+    /**
+     * @return the createTime
+     */
+    public Long getCreateTime() {
+        return CreateTime;
+    }
+
+    /**
+     * @param createTime the createTime to set
+     */
+    public void setCreateTime(Long createTime) {
+        CreateTime = createTime;
     }
     
 }

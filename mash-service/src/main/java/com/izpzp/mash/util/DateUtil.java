@@ -1,5 +1,5 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: DateUtil.java
  * Author:   12090707
  * Date:     2014-3-21 下午4:16:56

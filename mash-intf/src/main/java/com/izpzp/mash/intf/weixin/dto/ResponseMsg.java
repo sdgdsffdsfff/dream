@@ -42,7 +42,7 @@ public class ResponseMsg implements Serializable {
     /**
      * 创建时间-整型
      */
-    private Integer CreateTime;
+    private Long CreateTime;
     
     /**
      * text
@@ -113,15 +113,15 @@ public class ResponseMsg implements Serializable {
     /**
      * @return the createTime
      */
-    public Integer getCreateTime() {
+    public Long getCreateTime() {
         return CreateTime;
     }
 
     /**
      * @param createTime the createTime to set
      */
-    public void setCreateTime(Integer createTime) {
+    public void setCreateTime(Long createTime) {
         CreateTime = createTime;
     }
-    
+
 }

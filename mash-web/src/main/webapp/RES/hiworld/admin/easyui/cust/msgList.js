@@ -94,7 +94,7 @@ var toolbar = [{
 		        buttons:[{
 					text:'上墙',
 					handler:function(){
-						locPostData.showFlag = 1;
+						locPostData.showFlag = 0;
 						console.log(locPostData);
 						updateData(locPostData);
 						reloadData(postData);
@@ -103,7 +103,7 @@ var toolbar = [{
 				},{
 					text:'暂不上墙',
 					handler:function(){
-						locPostData.showFlag = 0;
+						locPostData.showFlag = 1;
 						console.log(locPostData);
 						updateData(locPostData);
 						reloadData(postData);

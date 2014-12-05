@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: AccessToken.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-19 上午9:36:15
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -14,7 +14,7 @@ package com.izpzp.mash.intf.weixin.dto;
  * access_token<br> 
  * access_token
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */

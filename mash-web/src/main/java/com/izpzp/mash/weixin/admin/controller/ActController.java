@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: ActController.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-21 上午9:49:00
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ import com.izpzp.mash.weixin.intf.ShowTheWorldAdminService;
  * 微信上墙后台-活动维护<br> 
  * 微信上墙后台-活动维护
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
@@ -52,9 +53,11 @@ public class ActController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("saveAct")
-    public void saveAct(HttpServletResponse response, 
+    public void saveAct(HttpServletRequest request,
+            HttpServletResponse response, 
             ActBean actBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         actBean.setCreator(adminUserCode);
         boolean flag = showTheWorldAdminService.saveAct(actBean);
         Map<String, Object> result = new HashMap<String, Object>();
@@ -73,9 +76,11 @@ public class ActController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("delAct")
-    public void delAct(HttpServletResponse response, 
+    public void delAct(HttpServletRequest request,
+            HttpServletResponse response, 
             Integer actId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         boolean flag = showTheWorldAdminService.delAct(actId, adminUserCode);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put(Constants.SUCCESS_FLAG, flag);
@@ -93,9 +98,11 @@ public class ActController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getAct")
-    public void getAct(HttpServletResponse response, 
+    public void getAct(HttpServletRequest request,
+            HttpServletResponse response, 
             Integer actId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         SearchActBean searchActBean = new SearchActBean();
         searchActBean.setActId(actId);
         searchActBean.setCreator(adminUserCode);
@@ -114,9 +121,11 @@ public class ActController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getActs")
-    public void getActs(HttpServletResponse response, 
+    public void getActs(HttpServletRequest request,
+            HttpServletResponse response, 
             SearchActBean searchActBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         searchActBean.setCreator(adminUserCode);
         QueryResult<ActBean> query = showTheWorldAdminService.getActs(searchActBean);
         WriteHtmlUtils.write(new Gson().toJson(query), response);

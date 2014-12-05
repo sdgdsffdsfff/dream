@@ -1,6 +1,21 @@
 /**
  */
 ;(function($){
+	
+	/*
+	 * 过滤表情
+	 */
+	function filterContext(context){
+		var data = context;
+		var mycars=new Array("/::)", "/::~", "/::B", "/::|", "/:8-)", "/::<", "/::$", "/::X", "/::Z", "/::'(", "/::-|", "/::@", "/::P", "/::D", "/::O", "/::(", "/::+", "/:--b", "/::Q", "/::T", "/:,@P", "/:,@-D", "/::d", "/:,@o", "/::g", "/:|-)", "/::!", "/::L", "/::>", "/::,@", "/:,@f", "/::-S", "/:?", "/:,@x", "/:,@@", "/::8", "/:,@!", "/:!!!", "/:xx", "/:bye", "/:wipe", "/:dig", "/:handclap", "/:&-(", "/:B-)", "/:<@", "/:@>", "/::-O", "/:>-|", "/:P-(", "/::'|", "/:X-)", "/::*", "/:@x", "/:8*", "/:pd", "/:<W>", "/:beer", "/:basketb", "/:oo", "/:coffee", "/:eat", "/:pig", "/:rose", "/:fade", "/:showlove", "/:heart", "/:break", "/:cake", "/:li", "/:bome", "/:kn", "/:footb", "/:ladybug", "/:shit", "/:moon", "/:sun", "/:gift", "/:hug", "/:strong", "/:weak", "/:share", "/:v", "/:@)", "/:jj", "/:@@", "/:bad", "/:lvu", "/:no", "/:ok", "/:love", "/:<L>", "/:jump", "/:shake", "/:<O>", "/:circle", "/:kotow", "/:turn", "/:skip", "/:oY");
+		var imgPreUrl = "<img src='https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/";
+		var imgFUrl = ".gif' style='clear: both;float: none;width: 36px;height: 36px;border: none;margin: 10px 0;' >";
+		for(var i=0;i<mycars.length;i++){
+			data = data.replace(mycars[i], imgPreUrl+i+imgFUrl);
+		}
+		return data;
+	}
+	
     $.extend($.easing,{
         easeOutBack:function(x,t,b,c,d,s){
             if (s == undefined) s = 1.70158;
@@ -12,6 +27,9 @@
     });
     var _timer = setInterval(function(){
     	var imguuuurl ="http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0";
+    	if(logoImg){
+    		imguuuurl = logoImg;
+    	}
     	
         $.ajax({
 	        type: "post",
@@ -30,12 +48,13 @@
             		initMsgShowFlag();
             		return;
             	}
+            	var dataContext = filterContext(data.datas[0].msgContext);
                 var _nWeibo = '<li class="clearfix" style="opacity:0;">' +
                                 '<img src="' + imguuuurl +'" alt="' + data.datas[0].nickname + '"/>' +
                                 '<div class="info">' +
                                     '<strong>' + data.datas[0].nickname + '</strong>' +
                                     '<p class="time">' + data.datas[0].msgTime + '</p>' +
-                                    '<p class="con">' + data.datas[0].msgContext + '</p>' +
+                                    '<p class="con">' + dataContext + '</p>' +
                                 '</div>' +
                               '</li>';
                 $("#weiboList").find("ul").stop().animate({"margin-top":[210+"px",'easeOutCubic']},1000,function(){
@@ -83,4 +102,5 @@ function getActInfoExt(){
         	$(".top-stat.r.pr50 strong:first-child").html(data.userCounts);
         }
     });
+
 }

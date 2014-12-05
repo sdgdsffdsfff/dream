@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: WeiXinService.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-17 下午4:21:22
  * Description: //模块目的、功能描述      
  * History: //修改记录

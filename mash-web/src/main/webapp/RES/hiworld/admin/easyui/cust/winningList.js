@@ -328,7 +328,7 @@ function formDataExt(data,buttons){
         dataType:"json",
         success:function(awardData){
         	data.awardName=awardData.awardName;
-        	data.awardCont=data.awardCont;
+        	data.awardCont=awardData.awardCont;
         	$('#ff').form('load',data);
         	myDialog("详情",buttons);
         }

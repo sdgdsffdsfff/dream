@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ftp-servers>
+ 	<server type="NGINX">
+		<ip>10.19.218.78</ip>
+		<port>21</port>
+		<userName>spftpuser</userName>
+		<password>spftpuser</password>
+		<encoding>GBK</encoding>
+	</server>
+</ftp-servers>

@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: SearchBean.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-3-11 上午10:27:49
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -16,7 +16,7 @@ import java.io.Serializable;
  * 〈一句话功能简述〉<br> 
  * 搜索条件Bean
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */

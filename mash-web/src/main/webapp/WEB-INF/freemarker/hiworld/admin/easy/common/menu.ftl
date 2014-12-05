@@ -11,7 +11,7 @@
     </li>
     <li><span>系统设置</span>
         <ul>
-            <li id="6" ><span>重设密码</span></li>
+            <#--<li id="6" ><span>重设密码</span></li> -->
         </ul>
     </li>
 </ul>

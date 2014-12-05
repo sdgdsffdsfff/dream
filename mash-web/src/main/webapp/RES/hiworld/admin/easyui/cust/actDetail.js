@@ -53,6 +53,13 @@ $(function(){
 	});
 	
 	/*
+	 * 跳转到活动图片维护页面
+	 */
+	$("#imgBtn").click(function(){
+		window.location.href = actImgUrl+"?actId="+actId;
+	});
+	
+	/*
 	 * 获取公众账号列表信息
 	 */
     $.ajax({

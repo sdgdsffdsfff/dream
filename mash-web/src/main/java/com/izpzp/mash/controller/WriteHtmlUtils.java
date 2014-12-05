@@ -1,5 +1,5 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: WriteHtmlUtils.java
  * Author:   13060148
  * Date:     2014-4-10 下午4:55:24

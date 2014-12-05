@@ -10,6 +10,7 @@
 	var delUrl = base + "/admin/delAct";
 	var objectUrl = base + "/admin/getAct";
 	var saveUrl = base + "/admin/saveAct";
+	var serviceUrl = base + "/showTheWorld/";
 	var postData = new Object();
 	postData.pageNumber = 1;
 	postData.pageSize = 10;
@@ -87,6 +88,11 @@
 	    		</tr>
 	    	</table>
 	    </form>
+    </div>
+
+    <#-- 提示弹出框 -->
+    <div id="ddtips" class="easyui-dialog" title="" 
+        data-options="iconCls:'icon-save',resizable:true,modal:true,closed: true">
     </div>
 
 </body>

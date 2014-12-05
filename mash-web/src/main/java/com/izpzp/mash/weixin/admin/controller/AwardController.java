@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: AwardController.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-21 上午10:53:48
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ import com.izpzp.mash.weixin.intf.ShowTheWorldAdminService;
  * 微信上墙后台-中奖规则维护<br> 
  * 微信上墙后台-中奖规则维护
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
@@ -54,9 +55,11 @@ public class AwardController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("saveAward")
-    public void saveAward(HttpServletResponse response, 
+    public void saveAward(HttpServletRequest request,
+            HttpServletResponse response, 
             AwardBean awardBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         awardBean.setCreator(adminUserCode);
         boolean flag = showTheWorldAdminService.saveAward(awardBean);
         Map<String, Object> result = new HashMap<String, Object>();
@@ -75,9 +78,11 @@ public class AwardController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("delAward")
-    public void delAward(HttpServletResponse response, 
+    public void delAward(HttpServletRequest request,
+            HttpServletResponse response, 
             Integer awardId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         boolean flag = showTheWorldAdminService.delAward(awardId, adminUserCode);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put(Constants.SUCCESS_FLAG, flag);
@@ -95,9 +100,11 @@ public class AwardController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getAward")
-    public void getAward(HttpServletResponse response, 
+    public void getAward(HttpServletRequest request,
+            HttpServletResponse response, 
             Integer awardId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         SearchAwardBean searchAwardBean = new SearchAwardBean();
         searchAwardBean.setCreator(adminUserCode);
         searchAwardBean.setAwardId(awardId);
@@ -116,9 +123,11 @@ public class AwardController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getAwards")
-    public void getAwards(HttpServletResponse response, 
+    public void getAwards(HttpServletRequest request,
+            HttpServletResponse response, 
             SearchAwardBean searchAwardBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         searchAwardBean.setCreator(adminUserCode);
         QueryResult<AwardBean> query = showTheWorldAdminService.getAwards(searchAwardBean);
         WriteHtmlUtils.write(new Gson().toJson(query), response);

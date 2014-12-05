@@ -1,5 +1,5 @@
 /*
- * Copyright (C), 2002-2013, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2013, izpzp.com
  * FileName: ComtBeanUtils.java
  * Author:   niuzhiheng
  * Date:     2013-3-15 上午10:01:02

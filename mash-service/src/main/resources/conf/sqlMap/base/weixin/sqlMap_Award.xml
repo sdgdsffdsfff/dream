@@ -47,6 +47,8 @@
             AWARD_IMG = #awardImg# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="awardNum">
             AWARD_NUM = #awardNum# </isNotEmpty>
+			    <isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
                 <isNotEmpty prepend="  " property="startIndex">
             LIMIT #startIndex#,#maxCount# </isNotEmpty>
     </select>
@@ -80,6 +82,8 @@
             AWARD_IMG = #awardImg# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="awardNum">
             AWARD_NUM = #awardNum# </isNotEmpty>
+			    <isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
             </select>
 
 	<insert id="insertAward" parameterClass="Award">  

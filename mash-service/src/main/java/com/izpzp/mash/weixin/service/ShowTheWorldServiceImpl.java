@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: ShowTheWorldServiceImpl.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-18 下午5:05:16
  * Description: //模块目的、功能描述      
  * History: //修改记录

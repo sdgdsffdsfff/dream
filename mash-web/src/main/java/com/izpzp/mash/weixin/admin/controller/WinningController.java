@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: WinningController.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-21 上午11:18:24
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ import com.izpzp.mash.weixin.intf.ShowTheWorldAdminService;
  * 微信上墙后台-中奖统计维护<br> 
  * 微信上墙后台-中奖统计维护
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
@@ -54,9 +55,11 @@ public class WinningController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("saveWinning")
-    public void saveWinning(HttpServletResponse response, 
+    public void saveWinning(HttpServletRequest request,
+            HttpServletResponse response, 
             WinningBean winningBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         winningBean.setCreator(adminUserCode);
         boolean flag = showTheWorldAdminService.saveWinning(winningBean);
         Map<String, Object> result = new HashMap<String, Object>();
@@ -75,9 +78,11 @@ public class WinningController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("delWinning")
-    public void delWinning(HttpServletResponse response, 
+    public void delWinning(HttpServletRequest request,
+            HttpServletResponse response, 
             Integer winId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         boolean flag = showTheWorldAdminService.delWinning(winId, adminUserCode);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put(Constants.SUCCESS_FLAG, flag);
@@ -95,9 +100,11 @@ public class WinningController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getWinning")
-    public void getWinning(HttpServletResponse response, 
+    public void getWinning(HttpServletRequest request,
+            HttpServletResponse response, 
             SearchWinningBean searchWinningBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         searchWinningBean.setCreator(adminUserCode);
         
         WinningBean winningBean = showTheWorldAdminService.getWinning(searchWinningBean);
@@ -115,9 +122,11 @@ public class WinningController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getWinnings")
-    public void getWinnings(HttpServletResponse response, 
+    public void getWinnings(HttpServletRequest request,
+            HttpServletResponse response, 
             SearchWinningBean searchWinningBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         searchWinningBean.setCreator(adminUserCode);
         QueryResult<WinningBean> query = showTheWorldAdminService.getWinnings(searchWinningBean);
         WriteHtmlUtils.write(new Gson().toJson(query), response);
@@ -132,9 +141,11 @@ public class WinningController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("bingo")
-    public void binGo(HttpServletResponse response, 
+    public void binGo(HttpServletRequest request,
+            HttpServletResponse response, 
             Integer actId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         //返回是否还能摇奖-名额已满
         Map<String, Object> result = null;
         //进行抽奖

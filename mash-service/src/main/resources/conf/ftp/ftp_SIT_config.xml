@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ftp-servers>
+ 	<server type="NGINX">
+		<ip>10.24.75.131</ip>
+		<port>21</port>
+		<userName>zp</userName>
+		<password>zp</password>
+		<encoding>GBK</encoding>
+	</server>
+</ftp-servers>

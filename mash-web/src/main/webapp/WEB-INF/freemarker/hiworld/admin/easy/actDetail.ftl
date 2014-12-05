@@ -13,6 +13,7 @@
 	var saveUrl = base + "/admin/saveAct";
 	var accountListUrl = base + "/admin/getAccounts";
 	var accountUrl = base + "/admin/getAccount";
+	var actImgUrl = base + "/admin/actImg";
 	var postData = new Object();
 	postData.pageNumber = 1;
 	postData.pageSize = 10;
@@ -24,6 +25,9 @@
         style="width:100%;height:100%;padding:10px;background:#fafafa;"
         data-options="" >
         <a id="backBtn" href="javascript:void(0);" class="easyui-linkbutton backBtn" data-options="iconCls:'icon-back'">返回列表页</a>
+        <#if actId??>
+        <a id="imgBtn" href="javascript:void(0);" class="easyui-linkbutton backBtn" data-options="iconCls:'icon-add'">维护活动图片</a>
+        </#if>
         <form id="ff" method="post">
 	    	<table cellpadding="5">
 	    		<tr style="display:none" >

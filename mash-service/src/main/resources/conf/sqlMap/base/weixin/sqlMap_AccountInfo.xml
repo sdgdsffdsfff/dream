@@ -51,6 +51,8 @@
             FAIL_TIME = #failTime# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="accessFlag">
             ACCESS_FLAG = #accessFlag# </isNotEmpty>
+				<isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
                 <isNotEmpty prepend="  " property="startIndex">
             LIMIT #startIndex#,#maxCount# </isNotEmpty>
     </select>
@@ -86,6 +88,8 @@
             FAIL_TIME = #failTime# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="accessFlag">
             ACCESS_FLAG = #accessFlag# </isNotEmpty>
+			    <isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
             </select>
 
 	<insert id="insertAccountInfo" parameterClass="AccountInfo">  

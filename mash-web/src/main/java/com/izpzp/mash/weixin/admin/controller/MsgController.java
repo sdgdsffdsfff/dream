@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: MsgController.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-21 上午10:11:12
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ import com.izpzp.mash.weixin.intf.ShowTheWorldAdminService;
  * 微信上墙后台-公众消息上墙管理<br> 
  * 微信上墙后台-公众消息上墙管理
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
@@ -44,9 +45,11 @@ public class MsgController {
     ShowTheWorldAdminService showTheWorldAdminService;
     
     @RequestMapping("saveMsg")
-    public void saveMsg(HttpServletResponse response, 
+    public void saveMsg(HttpServletRequest request,
+            HttpServletResponse response, 
             MsgBean msgBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         msgBean.setCreator(adminUserCode);
         boolean flag = showTheWorldAdminService.saveMsg(msgBean);
         Map<String, Object> result = new HashMap<String, Object>();
@@ -65,9 +68,11 @@ public class MsgController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("delMsg")
-    public void delMsg(HttpServletResponse response, 
+    public void delMsg(HttpServletRequest request,
+            HttpServletResponse response, 
             Integer msgId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         boolean flag = showTheWorldAdminService.delMsg(msgId, adminUserCode);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put(Constants.SUCCESS_FLAG, flag);
@@ -85,9 +90,11 @@ public class MsgController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getMsg")
-    public void getMsg(HttpServletResponse response, 
+    public void getMsg(HttpServletRequest request,
+            HttpServletResponse response, 
             Integer msgId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         SearchMsgBean searchMsgBean = new SearchMsgBean();
         searchMsgBean.setCreator(adminUserCode);
         searchMsgBean.setMsgId(msgId);
@@ -106,9 +113,11 @@ public class MsgController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getMsgs")
-    public void getMsgs(HttpServletResponse response, 
+    public void getMsgs(HttpServletRequest request,
+            HttpServletResponse response, 
             SearchMsgBean searchMsgBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         searchMsgBean.setCreator(adminUserCode);
         QueryResult<MsgBean> query = showTheWorldAdminService.getMsgs(searchMsgBean);
         WriteHtmlUtils.write(new Gson().toJson(query), response);

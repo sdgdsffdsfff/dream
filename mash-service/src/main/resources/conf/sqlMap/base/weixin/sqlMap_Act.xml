@@ -71,6 +71,8 @@
             ACT_START_TIME = #actStartTime# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="actEndTime">
             ACT_END_TIME = #actEndTime# </isNotEmpty>
+			    <isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
                 <isNotEmpty prepend="  " property="startIndex">
             LIMIT #startIndex#,#maxCount# </isNotEmpty>
     </select>
@@ -116,6 +118,8 @@
             ACT_START_TIME = #actStartTime# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="actEndTime">
             ACT_END_TIME = #actEndTime# </isNotEmpty>
+			    <isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
             </select>
 
 	<insert id="insertAct" parameterClass="Act">  

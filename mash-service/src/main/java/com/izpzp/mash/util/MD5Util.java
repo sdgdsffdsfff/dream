@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: MD5Util.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-23 上午11:20:29
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -16,7 +16,7 @@ import java.security.MessageDigest;
  * MD5Util<br> 
  * MD5Util
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */

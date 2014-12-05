@@ -51,6 +51,8 @@
             BINGO_NAME = #bingoName# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="bingoTel">
             BINGO_TEL = #bingoTel# </isNotEmpty>
+			    <isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
                 <isNotEmpty prepend="  " property="startIndex">
             LIMIT #startIndex#,#maxCount# </isNotEmpty>
     </select>
@@ -86,6 +88,8 @@
             BINGO_NAME = #bingoName# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="bingoTel">
             BINGO_TEL = #bingoTel# </isNotEmpty>
+			    <isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
             </select>
 
 	<insert id="insertWinning" parameterClass="Winning">  

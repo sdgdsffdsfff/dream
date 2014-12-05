@@ -9,6 +9,7 @@
 	var delAccountUrl = base + "/admin/delAccount";
 	var accountObjectUrl = base + "/admin/getAccount";
 	var saveAccountUrl = base + "/admin/saveAccount";
+	var serviceUrl = base + "/weixin/";
 	var postData = new Object();
 	postData.pageNumber = 1;
 	postData.pageSize = 10;
@@ -40,7 +41,6 @@
 	<#-- 弹出框 -->
 	<div id="dd" class="easyui-dialog" title="" 
         data-options="iconCls:'icon-save',resizable:true,modal:true,closed: true">
-        
         <form id="ff" method="post">
 	    	<table cellpadding="5">
 	    	    <tr style="display:none" >
@@ -69,7 +69,7 @@
 	    		</tr>
 	    		<tr>
 	    			<td>AToken失效时间</td>
-	    			<td><input class="easyui-datetimebox" name="failTime" data-options="required:true,showSeconds:false" style="width:150px"></input></td>
+	    			<td><input class="easyui-datetimebox" name="failTime" data-options="required:true,showSeconds:false,missingMessage:'必选'" style="width:150px"></input></td>
 	    		</tr>
 	    		<tr>
 	    			<td>认证标识</td>
@@ -82,7 +82,11 @@
 	    		</tr>
 	    	</table>
 	    </form>
-        
+    </div>
+    
+    <#-- 提示弹出框 -->
+    <div id="ddtips" class="easyui-dialog" title="" 
+        data-options="iconCls:'icon-save',resizable:true,modal:true,closed: true">
     </div>
 
 </body>

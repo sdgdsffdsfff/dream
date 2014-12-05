@@ -25,6 +25,11 @@
 	<bean id="conversionService"
 		class="org.springframework.context.support.ConversionServiceFactoryBean">
 	</bean>
+	
+	<!-- 上传文件拦截，设置最大上传文件大小   3M=10*1024*1024(B)=3145728 bytes -->  
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+	     <property name="maxUploadSize" value="3145728" />
+	</bean>
 
 	<bean id="webPropertyConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

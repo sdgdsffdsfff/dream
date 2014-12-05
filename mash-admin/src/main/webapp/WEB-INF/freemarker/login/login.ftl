@@ -13,7 +13,7 @@ function doLogin(){
         data:"j_username="+username+"&j_password="+password,  
         success: function(data){
             $("#results").text(data);
-        }  
+        }
     });  
 }
 </script>  

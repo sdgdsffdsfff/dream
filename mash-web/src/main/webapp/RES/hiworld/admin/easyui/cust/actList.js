@@ -25,6 +25,30 @@ var toolbar = [{
 			window.location.href = detailUrl+"?actId="+rowData.actId;
 		}
 	}
+},{
+	text:'活动首页链接(URL)',
+	iconCls:'icon-add',
+	handler:function(){
+		var rowData = $('#dg').datagrid("getSelected");
+		if(rowData){
+		    $('#ddtips').dialog({
+		        title: '活动首页URL',
+		        iconCls:'icon-ok',
+		        width: 350,
+		        height: 120,
+		        closed: false,
+		        cache: false,
+		        modal: true,
+		        content:'<div style="margin-top: 10px;margin-left: 10px;">活动首页(URL):'+serviceUrl+rowData.actId+'<br></div>',
+		        buttons:[{
+					text:'确定',
+					handler:function(){
+						$('#ddtips').dialog({closed: true});
+					}
+				}]
+		    });
+		}
+	}
 }];
 
 $(function(){

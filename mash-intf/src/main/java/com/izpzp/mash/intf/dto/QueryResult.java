@@ -1,7 +1,7 @@
 /*
  * Copyright (C), 2002-2014,izpzp
  * FileName: QueryResult.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-3-11 上午10:19:43
  * Description: //模块目的、功能描述      
  * History: //修改记录

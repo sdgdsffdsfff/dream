@@ -1,7 +1,7 @@
 /*
- * Copyright (C), 2002-2014, 苏宁易购电子商务有限公司
+ * Copyright (C), 2002-2014, izpzp.com
  * FileName: AccountController.java
- * Author:   13075787
+ * Author:   izpzp
  * Date:     2014-11-20 下午7:18:13
  * Description: //模块目的、功能描述      
  * History: //修改记录
@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ import com.izpzp.mash.weixin.intf.ShowTheWorldAdminService;
  * 微信上墙后台-公众账号管理<br> 
  * 微信上墙后台-公众账号管理
  *
- * @author 13075787
+ * @author izpzp
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
@@ -54,9 +55,11 @@ public class AccountController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("saveAccount")
-    public void saveAccount(HttpServletResponse response, 
+    public void saveAccount(HttpServletRequest request,
+            HttpServletResponse response, 
             AccountInfoBean accountInfoBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         accountInfoBean.setCreator(adminUserCode);
         boolean flag = showTheWorldAdminService.saveAccountInfo(accountInfoBean);
         Map<String, Object> result = new HashMap<String, Object>();
@@ -75,9 +78,11 @@ public class AccountController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("delAccount")
-    public void delAccount(HttpServletResponse response,
+    public void delAccount(HttpServletRequest request,
+            HttpServletResponse response,
             Integer mpId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         boolean flag = showTheWorldAdminService.delAccountInfo(mpId, adminUserCode);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put(Constants.SUCCESS_FLAG, flag);
@@ -95,9 +100,11 @@ public class AccountController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getAccount")
-    public void getAccount(HttpServletResponse response,
+    public void getAccount(HttpServletRequest request,
+            HttpServletResponse response,
             Integer mpId) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         SearchAccountInfoBean searchAccountInfoBean = new SearchAccountInfoBean();
         searchAccountInfoBean.setMpId(mpId);
         searchAccountInfoBean.setCreator(adminUserCode);
@@ -115,9 +122,11 @@ public class AccountController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("getAccounts")
-    public void getAccounts(HttpServletResponse response,
+    public void getAccounts(HttpServletRequest request,
+            HttpServletResponse response,
             SearchAccountInfoBean searchAccountInfoBean) throws IOException{
         String adminUserCode = Constants.DEF_ADMIN;
+        adminUserCode = request.getRemoteUser();
         searchAccountInfoBean.setCreator(adminUserCode);
         QueryResult<AccountInfoBean> query = showTheWorldAdminService.getAccountInfos(searchAccountInfoBean);
         WriteHtmlUtils.write(new Gson().toJson(query), response);

@@ -14,4 +14,20 @@
 
 	<context:component-scan base-package="com.izpzp.mash" />
 	
+	<bean id="ftpConfiger" class="com.izpzp.mash.ftp.service.FtpConfiger">
+		<property name="resource">
+			<value>classpath:conf/ftp/ftp_$[envName]_config.xml</value>
+		</property>
+	</bean>
+	
+	<bean id="propertyConfiger"
+		class="com.izpzp.mash.util.PropertyConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:conf/main-setting-web-$[envName].properties</value>
+			</list>
+		</property>
+	</bean>	
+	
 </beans>

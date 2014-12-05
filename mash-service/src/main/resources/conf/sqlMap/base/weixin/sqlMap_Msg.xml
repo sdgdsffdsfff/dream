@@ -11,6 +11,7 @@
 	    	        <result property="msgContext" column="MSG_CONTEXT" />
 	    	        <result property="checkFlag" column="CHECK_FLAG" />
 	    	        <result property="showFlag" column="SHOW_FLAG" />
+					<result property="createDttm" column="CREATE_DTTM" />
 	    	    <result property="creator" column="CREATOR" />
 	    <result property="updater" column="UPDATER" />
 	</resultMap>
@@ -22,6 +23,7 @@
 	    	        MSG_CONTEXT,
 	    	        CHECK_FLAG,
 	    	        SHOW_FLAG,
+					CREATE_DTTM,
 	    	    CREATOR,UPDATER,UPDATE_DTTM
 	</sql>
 
@@ -50,6 +52,8 @@
             CHECK_FLAG = #checkFlag# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="showFlag">
             SHOW_FLAG = #showFlag# </isNotEmpty>
+			    <isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
 			 <isNotEmpty prepend=" " property="groupOpenId">
 			      GROUP BY OPEN_ID 
              </isNotEmpty>
@@ -86,6 +90,8 @@
             CHECK_FLAG = #checkFlag# </isNotEmpty>
                 <isNotEmpty prepend=" AND " property="showFlag">
             SHOW_FLAG = #showFlag# </isNotEmpty>
+			    <isNotEmpty prepend=" AND " property="creator">
+            CREATOR = #creator# </isNotEmpty>
 			    <isNotEmpty prepend=" " property="userCountsFlag">
             GROUP BY OPEN_ID </isNotEmpty>
             </select>

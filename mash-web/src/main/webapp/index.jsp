@@ -4,6 +4,6 @@
 <meta charset="utf-8">
 </head>
 <body>
-<h2>欢迎来到nsf-istore-web首页</h2>
+<h2>欢迎您</h2>
 </body>
 </html>
